@@ -2,6 +2,7 @@ import { useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import ContentSection from "@/components/ContentSection";
 import ROICalculator from "@/components/ROICalculator";
+import googExplosion from "@/assets/goog-explosion.gif";
 
 const sections = [
   {
@@ -11,6 +12,14 @@ const sections = [
     videoUrl: "https://www.youtube.com/embed/v2dHPwqwFAg?si=bAX4WH_-4ASjwh2X",
     gifUrl: "https://media1.tenor.com/m/xti0oGwDIGAAAAAd/slimer-ghostbusters.gif",
     gifAlt: "Slimer eating GIF",
+  },
+  {
+    title: "From SEO to GEO",
+    description:
+      "There's no overstating the massive impact AI chatbots have had on the way people search the web and consume content. According to AdExchanger, publishers have admitted losing 20%, 30% and in some cases even as much as 90% of their traffic and revenue over the past year.\n\nIn place of a search bar, users are having in-depth conversations with AI powered chatbots about how to plan their next vacation or what toy is right for a nature loving kid turning 12. In this week's video we feature a playbook for an agent that can analyze hundreds of thousands of web pages, compare them to the latest best practices for how to succeed in the world of AI search, and provide you with a detailed strategy for how to improve your rankings in the world of Generative Engine Optimization (GEO).",
+    videoUrl: "https://www.youtube.com/embed/rN473SYk8iU",
+    gifUrl: googExplosion,
+    gifAlt: "Google explosion cat GIF",
   },
   {
     description:

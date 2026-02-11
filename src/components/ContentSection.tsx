@@ -16,7 +16,7 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt }: Conten
               {title}
             </div>
           )}
-          <div className="flex-1">{description}</div>
+          <div className="flex-1 whitespace-pre-line">{description}</div>
         </div>
         <div className="media-frame flex flex-col">
           <iframe
