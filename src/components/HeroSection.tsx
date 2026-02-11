@@ -17,9 +17,9 @@ const HeroSection = ({ onUnlock }: HeroSectionProps) => {
       {/* Decorative blob */}
       <div className="gradient-blob-pink -top-10 -right-5 w-[220px] h-[220px]" />
 
-      <span className="uppercase tracking-[0.3em] text-xs text-muted-foreground">From 1X to 10X</span>
+      <span className="font-display text-[clamp(32px,4vw,52px)] leading-[1.05] m-0">From 1X to 10X</span>
 
-      <h1 className="font-display text-[clamp(32px,4vw,52px)] leading-[1.05] m-0">
+      <h1 className="font-display text-[clamp(28px,4vw,48px)] leading-[1.05] m-0">
         Level up your marketing with AI agents
       </h1>
 
