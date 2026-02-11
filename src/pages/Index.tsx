@@ -4,7 +4,7 @@ import ContentSection from "@/components/ContentSection";
 import ROICalculator from "@/components/ROICalculator";
 import googExplosion from "@/assets/goog-explosion.gif";
 
-const sections = [
+const playbooks = [
   {
     title: "5 ways to avoid workslop",
     description:
@@ -46,10 +46,13 @@ const Index = () => {
 
       {unlocked && (
         <div className="grid gap-7 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {sections.map((s, i) => (
-            <ContentSection key={i} {...s} />
+          {playbooks.slice(0, 2).map((s, i) => (
+            <ContentSection key={i} {...s} sectionLabel={`Playbook ${i + 1}`} />
           ))}
           <ROICalculator />
+          {playbooks.slice(2).map((s, i) => (
+            <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 3}`} />
+          ))}
         </div>
       )}
     </main>
