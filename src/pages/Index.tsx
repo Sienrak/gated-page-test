@@ -22,11 +22,12 @@ const playbooks = [
     gifAlt: "Google explosion cat GIF",
   },
   {
+    title: "Stop sweating swag deliveries",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet sapien non velit egestas, in dignissim lorem gravida. Maecenas placerat felis at gravida fringilla.",
-    videoUrl: "https://www.youtube.com/embed/ysz5S6PUM-U",
-    gifUrl: "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif",
-    gifAlt: "AI workflow GIF",
+      "Our field marketer Ryan Schwary show the digital intern she built to keep track of dozens of shipment in transit, allowing her to focus on the event at hand.",
+    videoUrl: "https://www.youtube.com/embed/xLUP7DJ30Z8?si=Eyzohf-1CymC1RKo",
+    gifUrl: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2t5N285YWJwNmtueTg1Y250bGszZHhmZXltanBjY3locjgwMmtvZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RkSjoKqjpWvlmRvbUk/giphy.gif",
+    gifAlt: "Swag delivery tracking GIF",
   },
   {
     description:
