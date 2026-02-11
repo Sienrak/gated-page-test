@@ -4,11 +4,17 @@ interface ContentSectionProps {
   videoUrl: string;
   gifUrl: string;
   gifAlt: string;
+  sectionLabel?: string;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel }: ContentSectionProps) => {
   return (
     <article className="glass-section p-7">
+      {sectionLabel && (
+        <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+          {sectionLabel}
+        </div>
+      )}
       <div className="grid gap-[22px] grid-cols-1 lg:grid-cols-[1fr_1.2fr_0.9fr] items-stretch">
         <div className="copy-box flex flex-col">
           {title && (
