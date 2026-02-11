@@ -21,29 +21,13 @@ const HeroSection = ({ onUnlock }: HeroSectionProps) => {
         From 1X to 10X
       </span>
 
-      <h1 className="font-display text-[clamp(40px,5vw,64px)] leading-[1.05] m-0">
+      <h1 className="font-display text-[clamp(32px,4vw,52px)] leading-[1.05] m-0">
         Level up your marketing with AI
       </h1>
 
       <p className="text-lg text-muted-foreground max-w-[60ch] m-0">
-        Unlock the gated playbook used by growth teams to scale creative, automate workflows, and prove ROI with confidence.
+        Unlock the playbook used by growth teams to scale creative, automate workflows, and prove ROI with confidence.
       </p>
-
-      <div className="flex flex-wrap gap-3">
-        <button
-          type="button"
-          className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 text-primary-foreground"
-          style={{ background: "var(--gradient-primary)", boxShadow: "0 16px 30px rgba(234, 213, 254, 0.45)" }}
-        >
-          Get the playbook
-        </button>
-        <button
-          type="button"
-          className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 bg-secondary text-secondary-foreground"
-        >
-          View sample
-        </button>
-      </div>
 
       <div className="dark-panel p-7 grid gap-3">
         <div className="gradient-blob-lav" style={{ inset: "-20% 40% auto auto", width: 240, height: 240 }} />
