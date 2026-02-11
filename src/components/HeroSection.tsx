@@ -17,23 +17,22 @@ const HeroSection = ({ onUnlock }: HeroSectionProps) => {
       {/* Decorative blob */}
       <div className="gradient-blob-pink -top-10 -right-5 w-[220px] h-[220px]" />
 
-      <span className="uppercase tracking-[0.3em] text-xs text-muted-foreground">
-        From 1X to 10X
-      </span>
+      <span className="uppercase tracking-[0.3em] text-xs text-muted-foreground">From 1X to 10X</span>
 
       <h1 className="font-display text-[clamp(32px,4vw,52px)] leading-[1.05] m-0">
-        Level up your marketing with AI
+        Level up your marketing with AI agents
       </h1>
 
       <p className="text-lg text-muted-foreground max-w-[60ch] m-0">
-        Unlock the playbook used by growth teams to scale creative, automate workflows, and prove ROI with confidence.
+        Learn the playbooks used by our Marketing team to scale creative, automate workflows, and prove ROI with
+        confidence.
       </p>
 
       <div className="dark-panel p-7 grid gap-3">
         <div className="gradient-blob-lav" style={{ inset: "-20% 40% auto auto", width: 240, height: 240 }} />
         <h2 className="text-[22px] font-semibold m-0">Enter your email to unlock the content</h2>
         <p className="m-0 text-white/75 max-w-[52ch]">
-          We will send you a copy plus a monthly dose of AI marketing ideas. Unsubscribe anytime.
+          We will send you tips and tricks, plus a monthly dose of AI marketing ideas. Unsubscribe anytime.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-wrap gap-2.5 relative z-10">
           <input
