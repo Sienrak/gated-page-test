@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 interface ContentSectionProps {
   title?: string;
   description: string;
@@ -5,9 +8,12 @@ interface ContentSectionProps {
   gifUrl: string;
   gifAlt: string;
   sectionLabel?: string;
+  expandedText?: string;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText }: ContentSectionProps) => {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <article className="glass-section p-7">
       {sectionLabel && (
@@ -42,6 +48,33 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
           />
         </div>
       </div>
+
+      {expandedText && (
+        <div className="flex flex-col items-center mt-4">
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="group flex items-center justify-center w-10 h-10 rounded-full bg-secondary/60 hover:bg-secondary transition-colors cursor-pointer border-none"
+            aria-label={expanded ? "Collapse section" : "Expand section"}
+          >
+            <ChevronDown
+              className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
+                expanded ? "rotate-180" : "animate-bounce"
+              }`}
+            />
+          </button>
+          <div
+            className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
+              expanded ? "max-h-[600px] opacity-100 mt-5" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="whitespace-pre-line text-foreground/80">
+              {expandedText}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-3 mt-5">
         <button
           type="button"
