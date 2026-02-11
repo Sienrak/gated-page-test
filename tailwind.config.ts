@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['"Instrument Serif"', 'serif'],
+        body: ['"Manrope"', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,6 +61,21 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        tan: {
+          1: "hsl(var(--tan-1))",
+          2: "hsl(var(--tan-2))",
+          3: "hsl(var(--tan-3))",
+        },
+        pink: {
+          1: "hsl(var(--pink-1))",
+          2: "hsl(var(--pink-2))",
+          3: "hsl(var(--pink-3))",
+        },
+        lav: {
+          1: "hsl(var(--lav-1))",
+          2: "hsl(var(--lav-2))",
+          3: "hsl(var(--lav-3))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,20 +84,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {

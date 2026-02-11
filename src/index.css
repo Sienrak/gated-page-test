@@ -2,84 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --tan-1: 14 100% 92%;
+    --tan-2: 340 62% 91%;
+    --tan-3: 2 74% 92%;
+    --pink-1: 308 72% 79%;
+    --pink-2: 303 64% 82%;
+    --pink-3: 305 69% 81%;
+    --lav-1: 271 96% 91%;
+    --lav-2: 290 69% 88%;
+    --lav-3: 296 63% 90%;
+
+    --background: 300 30% 92%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 308 72% 79%;
+    --primary-foreground: 280 30% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 280 20% 12%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 280 12% 29%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 271 96% 91%;
+    --accent-foreground: 280 30% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 340 30% 85%;
+    --input: 340 30% 85%;
+    --ring: 308 72% 79%;
 
-    --radius: 0.5rem;
+    --radius: 1.5rem;
+
+    --shadow-panel: 0 28px 70px rgba(30, 16, 42, 0.16);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--pink-2)), hsl(var(--lav-1)));
+    --gradient-bg: 
+      radial-gradient(680px 380px at 10% 5%, hsl(var(--tan-1)), transparent 60%),
+      radial-gradient(720px 420px at 80% 10%, hsl(var(--pink-1)), transparent 60%),
+      radial-gradient(640px 420px at 65% 90%, hsl(var(--lav-2)), transparent 60%),
+      linear-gradient(135deg, hsl(var(--tan-1)), hsl(var(--tan-2)) 40%, hsl(var(--lav-1)) 100%);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 280 30% 6%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
+    --card: 280 30% 8%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
+    --popover: 280 30% 8%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
+    --primary: 308 72% 79%;
+    --primary-foreground: 280 30% 10%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 271 96% 91%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -100,6 +101,59 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+    background: var(--gradient-bg);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-[var(--radius)] border border-white/60;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .glass-section {
+    @apply rounded-[var(--radius)] border border-white/70;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .dark-panel {
+    @apply rounded-[18px] text-white relative overflow-hidden;
+    background: hsl(var(--secondary));
+  }
+
+  .gradient-blob-pink {
+    @apply absolute pointer-events-none;
+    background: radial-gradient(circle, hsl(var(--pink-2)), transparent 70%);
+    filter: blur(8px);
+    opacity: 0.8;
+  }
+
+  .gradient-blob-lav {
+    @apply absolute pointer-events-none;
+    background: radial-gradient(circle, hsl(var(--lav-1)), transparent 70%);
+  }
+
+  .copy-box {
+    @apply rounded-2xl text-muted-foreground text-[15px] border;
+    padding: 18px;
+    background: linear-gradient(150deg, hsl(var(--tan-1)), hsl(var(--tan-2)));
+    border-color: rgba(230, 200, 204, 0.8);
+  }
+
+  .media-frame {
+    @apply rounded-2xl overflow-hidden border min-h-[220px];
+    border-color: rgba(230, 200, 204, 0.8);
+    background: #fff7fb;
+  }
+
+  .gif-frame {
+    @apply rounded-2xl overflow-hidden relative min-h-[220px];
+    aspect-ratio: 1 / 1;
   }
 }
