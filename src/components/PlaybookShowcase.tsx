@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ListTodo, ArrowRight } from "lucide-react";
 import PlaybookDetailModal from "./PlaybookDetailModal";
 import type { PlaybookDetail } from "./PlaybookDetailModal";
 
@@ -53,6 +54,18 @@ const showcasePlaybooks: PlaybookDetail[] = [
       "Compile and format digest email",
     ],
   },
+  {
+    title: "Competitive positioning brief",
+    description:
+      "Analyze your website against competitors' and create a strategic positioning brief.",
+    byline: "By WRITER",
+    deliverables: ["Strategic positioning brief"],
+    steps: [
+      "Crawl competitor websites",
+      "Compare messaging and positioning",
+      "Generate strategic brief",
+    ],
+  },
 ];
 
 const PlaybookShowcase = () => {
@@ -60,48 +73,54 @@ const PlaybookShowcase = () => {
 
   return (
     <>
-      <section className="rounded-[var(--radius)] overflow-hidden p-8 relative"
+      <section
+        className="pt-7 pb-5 rounded-xl bg-black overflow-hidden relative"
         style={{
-          background: "linear-gradient(135deg, #111827 0%, #1e3a5f 40%, #7c3aed 70%, #ec4899 100%)",
+          backgroundImage: `
+            radial-gradient(ellipse at top right, rgba(236, 72, 153, 0.7) 0%, transparent 50%),
+            radial-gradient(ellipse at top right, rgba(124, 58, 237, 0.5) 10%, transparent 60%),
+            radial-gradient(ellipse at 80% 20%, rgba(251, 146, 60, 0.4) 0%, transparent 40%),
+            linear-gradient(135deg, #000 0%, #0a0a0a 100%)
+          `,
         }}
       >
-        {/* Title */}
-        <div className="mb-6">
-          <h2 className="text-white text-[22px] font-semibold m-0 inline-flex items-center gap-2">
-            Playbook showcase
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </h2>
-        </div>
+        {/* Title button */}
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 bg-transparent border-0 cursor-pointer ml-6 mb-7 text-[16px] text-white font-medium"
+        >
+          Playbook showcase
+          <ArrowRight className="w-3 h-3" strokeWidth={3} />
+        </button>
 
         {/* Cards */}
-        <div className="flex gap-4 overflow-x-auto pb-2 -mb-2"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.3) transparent" }}
-        >
+        <div className="flex flex-nowrap gap-5 px-6 overflow-x-auto">
           {showcasePlaybooks.map((pb, i) => (
             <div
               key={i}
               onClick={() => setSelectedPlaybook(pb)}
-              className="flex-shrink-0 w-72 bg-white rounded-xl p-6 cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+              className="basis-[260px] w-[260px] h-[230px] grow-0 shrink-0 border border-gray-200 rounded-xl p-4 mb-9 bg-white cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
             >
               {/* Icon */}
-              <div className="w-11 h-11 bg-[#fce7f3] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-5 h-5 text-[#be185d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                </svg>
+              <div className="w-10 h-10 bg-pink-100 rounded-lg p-2 flex items-center justify-center mb-3">
+                <ListTodo className="w-5 h-5" />
               </div>
 
               {/* Title */}
-              <h3 className="text-base font-bold text-gray-900 mb-2 m-0">{pb.title}</h3>
+              <h4 className="text-[1rem] leading-[160%] font-medium m-0 mb-1">
+                {pb.title}
+              </h4>
 
               {/* Description */}
-              <p className="text-gray-500 text-sm m-0 leading-relaxed" style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}>
+              <p
+                className="text-[16px] leading-6 m-0 text-gray-600"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
                 {pb.description}
               </p>
             </div>
