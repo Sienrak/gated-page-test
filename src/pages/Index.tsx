@@ -6,6 +6,7 @@ import GateSection from "@/components/GateSection";
 import GatedContent from "@/components/GatedContent";
 import UnlockModal from "@/components/UnlockModal";
 import PlaybookShowcase from "@/components/PlaybookShowcase";
+import SideNav from "@/components/SideNav";
 import googExplosion from "@/assets/goog-explosion.gif";
 
 const playbooks = [
@@ -53,42 +54,46 @@ const Index = () => {
   };
 
   return (
-    <main className="w-[min(1200px,92vw)] mx-auto py-16 pb-28 grid gap-10">
-      <HeroSection />
+    <div className="w-[min(1400px,96vw)] mx-auto py-16 pb-28 flex gap-8">
+      <SideNav />
 
-      {/* Playbook 1 — always visible, buttons unchanged */}
-      <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" />
+      <main className="flex-1 min-w-0 grid gap-10">
+        <HeroSection />
 
-      {/* Playbook 2 — always visible, buttons trigger modal when locked */}
-      <ContentSection
-        {...playbooks[1]}
-        sectionLabel="Playbook 2"
-        onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
-      />
+        {/* Playbook 1 — always visible, buttons unchanged */}
+        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" />
 
-      {/* Playbook showcase — between Playbook 2 and gate */}
-      <PlaybookShowcase />
+        {/* Playbook 2 — always visible, buttons trigger modal when locked */}
+        <ContentSection
+          {...playbooks[1]}
+          sectionLabel="Playbook 2"
+          onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
+        />
 
-      {/* Email gate between Playbook 2 and gated content */}
-      {!unlocked && <GateSection onUnlock={handleUnlock} />}
+        {/* Playbook showcase — between Playbook 2 and gate */}
+        <PlaybookShowcase />
 
-      {/* Gated: ROI Calculator + Playbooks 3 & 4 */}
-      <GatedContent unlocked={unlocked} onUnlock={handleUnlock}>
-        <div className="grid gap-10">
-          <ROICalculator />
-          {playbooks.slice(2).map((s, i) => (
-            <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 3}`} />
-          ))}
-        </div>
-      </GatedContent>
+        {/* Email gate between Playbook 2 and gated content */}
+        {!unlocked && <GateSection onUnlock={handleUnlock} />}
 
-      {/* Modal triggered by Playbook 2 buttons */}
-      <UnlockModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onUnlock={handleUnlock}
-      />
-    </main>
+        {/* Gated: ROI Calculator + Playbooks 3 & 4 */}
+        <GatedContent unlocked={unlocked} onUnlock={handleUnlock}>
+          <div className="grid gap-10">
+            <ROICalculator />
+            {playbooks.slice(2).map((s, i) => (
+              <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 3}`} />
+            ))}
+          </div>
+        </GatedContent>
+
+        {/* Modal triggered by Playbook 2 buttons */}
+        <UnlockModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onUnlock={handleUnlock}
+        />
+      </main>
+    </div>
   );
 };
 
