@@ -77,13 +77,22 @@ const PlaybookShowcase = () => {
         className="pt-7 pb-5 rounded-xl bg-black overflow-hidden relative"
         style={{
           backgroundImage: `
-            radial-gradient(ellipse at top right, rgba(236, 72, 153, 0.7) 0%, transparent 50%),
-            radial-gradient(ellipse at top right, rgba(124, 58, 237, 0.5) 10%, transparent 60%),
-            radial-gradient(ellipse at 80% 20%, rgba(251, 146, 60, 0.4) 0%, transparent 40%),
-            linear-gradient(135deg, #000 0%, #0a0a0a 100%)
+            radial-gradient(ellipse at 95% 50%, rgba(251, 176, 59, 0.85) 0%, transparent 25%),
+            radial-gradient(ellipse at 85% 40%, rgba(236, 72, 153, 0.9) 0%, transparent 35%),
+            radial-gradient(ellipse at 70% 50%, rgba(168, 50, 150, 0.8) 0%, transparent 40%),
+            radial-gradient(ellipse at 55% 50%, rgba(100, 30, 120, 0.6) 0%, transparent 45%),
+            linear-gradient(to right, #0a0a0a 0%, #1a0a20 40%, #6b1d5e 65%, #c2185b 80%, #f59e0b 100%)
           `,
         }}
       >
+        {/* Noise/grain texture overlay using inline SVG filter */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30 mix-blend-overlay" xmlns="http://www.w3.org/2000/svg">
+          <filter id="showcase-noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#showcase-noise)" />
+        </svg>
         {/* Title button */}
         <button
           type="button"
