@@ -9,9 +9,10 @@ interface ContentSectionProps {
   gifAlt: string;
   sectionLabel?: string;
   expandedText?: string;
+  onButtonClick?: () => void;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick }: ContentSectionProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -78,6 +79,7 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
       <div className="flex flex-wrap gap-3 mt-5">
         <button
           type="button"
+          onClick={onButtonClick}
           className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 text-primary-foreground"
           style={{ background: "var(--gradient-primary)", boxShadow: "0 16px 30px rgba(234, 213, 254, 0.45)" }}
         >
@@ -85,6 +87,7 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
         </button>
         <button
           type="button"
+          onClick={onButtonClick}
           className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 bg-secondary text-secondary-foreground"
         >
           View sample

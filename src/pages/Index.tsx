@@ -2,6 +2,10 @@ import { useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import ContentSection from "@/components/ContentSection";
 import ROICalculator from "@/components/ROICalculator";
+import GateSection from "@/components/GateSection";
+import GatedContent from "@/components/GatedContent";
+import UnlockModal from "@/components/UnlockModal";
+import PlaybookShowcase from "@/components/PlaybookShowcase";
 import googExplosion from "@/assets/goog-explosion.gif";
 
 const playbooks = [
@@ -41,22 +45,49 @@ const playbooks = [
 
 const Index = () => {
   const [unlocked, setUnlocked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleUnlock = () => {
+    setUnlocked(true);
+    setModalOpen(false);
+  };
 
   return (
     <main className="w-[min(1200px,92vw)] mx-auto py-16 pb-28 grid gap-10">
-      <HeroSection onUnlock={() => setUnlocked(true)} />
+      <HeroSection />
 
-      {unlocked && (
-        <div className="grid gap-7 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {playbooks.slice(0, 2).map((s, i) => (
-            <ContentSection key={i} {...s} sectionLabel={`Playbook ${i + 1}`} />
-          ))}
+      {/* Playbook 1 — always visible, buttons unchanged */}
+      <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" />
+
+      {/* Playbook 2 — always visible, buttons trigger modal when locked */}
+      <ContentSection
+        {...playbooks[1]}
+        sectionLabel="Playbook 2"
+        onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
+      />
+
+      {/* Playbook showcase — between Playbook 2 and gate */}
+      <PlaybookShowcase />
+
+      {/* Email gate between Playbook 2 and gated content */}
+      {!unlocked && <GateSection onUnlock={handleUnlock} />}
+
+      {/* Gated: ROI Calculator + Playbooks 3 & 4 */}
+      <GatedContent unlocked={unlocked} onUnlock={handleUnlock}>
+        <div className="grid gap-10">
           <ROICalculator />
           {playbooks.slice(2).map((s, i) => (
             <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 3}`} />
           ))}
         </div>
-      )}
+      </GatedContent>
+
+      {/* Modal triggered by Playbook 2 buttons */}
+      <UnlockModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onUnlock={handleUnlock}
+      />
     </main>
   );
 };
