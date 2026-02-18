@@ -10,9 +10,10 @@ interface ContentSectionProps {
   sectionLabel?: string;
   expandedText?: string;
   onButtonClick?: () => void;
+  showDemoButton?: boolean;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton }: ContentSectionProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -92,6 +93,15 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
         >
           View sample
         </button>
+        {showDemoButton && (
+          <button
+            type="button"
+            className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 text-white"
+            style={{ background: "#5551ff" }}
+          >
+            Request a demo
+          </button>
+        )}
       </div>
     </article>
   );
