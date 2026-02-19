@@ -56,13 +56,15 @@ const Index = () => {
   };
 
   return (
-    <div className="w-[min(1400px,96vw)] mx-auto py-16 pb-28 flex gap-8">
-      <SideNav />
+    <div className="w-[min(1400px,96vw)] mx-auto py-16 pb-28">
+      {/* Hero — full width, above the sidebar layout */}
+      <HeroSection />
 
-      <main className="flex-1 min-w-0 grid gap-10">
-        <HeroSection />
+      <div className="flex gap-8 mt-10">
+        <SideNav />
 
-        {/* Playbook 1 — always visible, buttons unchanged */}
+        <main className="flex-1 min-w-0 grid gap-10">
+          {/* Playbook 1 — always visible, buttons unchanged */}
         <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" />
 
         {/* Playbook 2 — always visible, buttons trigger modal when locked */}
@@ -88,7 +90,7 @@ const Index = () => {
             Playbooks vs Prompts
           </div>
           <img
-            src="/playbook-vs-prompt.png"
+            src="/prompt vs AI 2.jpg"
             alt="Playbooks vs Prompts comparison chart"
             className="w-full rounded-xl"
           />
@@ -170,7 +172,8 @@ const Index = () => {
           onClose={() => setModalOpen(false)}
           onUnlock={handleUnlock}
         />
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
