@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import ContentSection from "@/components/ContentSection";
 import ROICalculator from "@/components/ROICalculator";
@@ -47,6 +48,7 @@ const playbooks = [
 const Index = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [comparisonExpanded, setComparisonExpanded] = useState(false);
 
   const handleUnlock = () => {
     setUnlocked(true);
@@ -90,6 +92,60 @@ const Index = () => {
             alt="Playbooks vs Prompts comparison chart"
             className="w-full rounded-xl"
           />
+
+          {/* Bouncing arrow + expandable comparison table */}
+          <div className="flex flex-col items-center mt-4">
+            <button
+              type="button"
+              onClick={() => setComparisonExpanded(!comparisonExpanded)}
+              className="group flex items-center justify-center w-10 h-10 rounded-full bg-secondary/60 hover:bg-secondary transition-colors cursor-pointer border-none"
+              aria-label={comparisonExpanded ? "Collapse comparison" : "Expand comparison"}
+            >
+              <ChevronDown
+                className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
+                  comparisonExpanded ? "rotate-180" : "animate-bounce"
+                }`}
+              />
+            </button>
+            <div
+              className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
+                comparisonExpanded ? "max-h-[2000px] opacity-100 mt-5" : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="overflow-x-auto rounded-xl border border-white/20">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left py-3 px-4 bg-[#3c2a46] text-white font-semibold tracking-wide uppercase text-xs w-[160px]">Dimension</th>
+                      <th className="text-left py-3 px-4 bg-[#3c2a46] text-white font-semibold tracking-wide uppercase text-xs">Prompt</th>
+                      <th className="text-left py-3 px-4 bg-[#3c2a46] text-white font-semibold tracking-wide uppercase text-xs">Playbook</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["What it is", "Text you type into a chatbot", "Reusable instructions for AI agents"],
+                      ["Input", "Manual, free-form text every time", "Structured form fills with variables"],
+                      ["Who benefits", "Only the person who wrote it", "Entire team, instantly"],
+                      ["Integration", "Disconnected from your tools & data", "Native connectors, knowledge graphs, brand voice"],
+                      ["Improvement", "Stays in your head or a doc", "Updates improve it for everyone"],
+                      ["Consistency", "Results vary by how you phrase it", "Reliable, repeatable outputs"],
+                      ["Workflow", "Single question → single answer", "Multi-step orchestration (research → analyze → deliver)"],
+                      ["Skill required", "Prompt engineering expertise", "WRITER Agent collaborates on crafting Playbook instructions"],
+                      ["Flexibility", "Finely tuned to a specific use case", "Variables adaptive to different use cases"],
+                      ["Output", "Raw text response", "Structured deliverables (reports, dashboards, campaigns)"],
+                      ["Scale", "Scales with individual skill", "Scales with team size"],
+                    ].map(([dimension, prompt, playbook], i) => (
+                      <tr key={i} className={i % 2 === 0 ? "bg-white/40" : "bg-white/20"}>
+                        <td className="py-3 px-4 font-semibold text-[#3c2a46] border-t border-white/20">{dimension}</td>
+                        <td className="py-3 px-4 text-foreground/80 border-t border-white/20">{prompt}</td>
+                        <td className="py-3 px-4 text-foreground/80 border-t border-white/20 font-medium">{playbook}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Playbook showcase */}
