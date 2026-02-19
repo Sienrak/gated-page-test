@@ -55,13 +55,30 @@ const Index = () => {
     setModalOpen(false);
   };
 
+  const handleNavClick = (id: string) => {
+    if (id === "playbooks-vs-prompts") {
+      setComparisonExpanded(true);
+      setTimeout(() => {
+        const el = document.getElementById("playbooks-vs-prompts");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 50);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
     <div className="w-[min(1400px,96vw)] mx-auto py-16 pb-28">
       {/* Hero — full width, above the sidebar layout */}
       <HeroSection />
 
       <div className="flex gap-8 mt-10">
-        <SideNav />
+        <SideNav onNavClick={handleNavClick} />
 
         <main className="flex-1 min-w-0 grid gap-10">
           {/* Playbook 1 — always visible, buttons unchanged */}
@@ -85,7 +102,7 @@ const Index = () => {
         />
 
         {/* Playbooks vs Prompts comparison */}
-        <section className="glass-section p-7">
+        <section id="playbooks-vs-prompts" className="glass-section p-7">
           <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
             Playbooks vs Prompts
           </div>

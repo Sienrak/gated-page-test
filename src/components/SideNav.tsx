@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-const SideNav = () => {
+interface SideNavProps {
+  onNavClick?: (id: string) => void;
+}
+
+const SideNav = ({ onNavClick }: SideNavProps) => {
   const [functionOpen, setFunctionOpen] = useState(false);
 
   const navItems = [
@@ -27,6 +31,12 @@ const SideNav = () => {
           <a
             key={item.id}
             href={`#${item.id}`}
+            onClick={(e) => {
+              if (onNavClick) {
+                e.preventDefault();
+                onNavClick(item.id);
+              }
+            }}
             className="block px-3 py-2 rounded-lg text-sm text-foreground/80 hover:bg-white/60 hover:text-foreground transition-colors no-underline"
           >
             {item.label}
