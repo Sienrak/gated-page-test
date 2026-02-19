@@ -61,7 +61,7 @@ const Index = () => {
         <HeroSection />
 
         {/* Playbook 1 — always visible, buttons unchanged */}
-        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton />
+        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" />
 
         {/* Playbook 2 — always visible, buttons trigger modal when locked */}
         <ContentSection

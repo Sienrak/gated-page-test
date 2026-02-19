@@ -11,9 +11,10 @@ interface ContentSectionProps {
   expandedText?: string;
   onButtonClick?: () => void;
   showDemoButton?: boolean;
+  viewOutputUrl?: string;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton, viewOutputUrl }: ContentSectionProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -86,13 +87,24 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
         >
           Get the playbook
         </button>
-        <button
-          type="button"
-          onClick={onButtonClick}
-          className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 bg-secondary text-secondary-foreground"
-        >
-          View sample
-        </button>
+        {viewOutputUrl ? (
+          <a
+            href={viewOutputUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 bg-secondary text-secondary-foreground no-underline inline-block"
+          >
+            View Output
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={onButtonClick}
+            className="rounded-full px-[22px] py-[14px] font-semibold text-[15px] border-none cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 bg-secondary text-secondary-foreground"
+          >
+            View sample
+          </button>
+        )}
         {showDemoButton && (
           <button
             type="button"
