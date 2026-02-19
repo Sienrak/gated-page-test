@@ -80,6 +80,18 @@ const Index = () => {
           viewOutputUrl="/enhanced_dashboard.html"
         />
 
+        {/* Playbooks vs Prompts comparison */}
+        <section className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+            Playbooks vs Prompts
+          </div>
+          <img
+            src="/playbook-vs-prompt.png"
+            alt="Playbooks vs Prompts comparison chart"
+            className="w-full rounded-xl"
+          />
+        </section>
+
         {/* Playbook showcase */}
         <PlaybookShowcase />
 
