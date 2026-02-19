@@ -5,16 +5,17 @@ interface ContentSectionProps {
   title?: string;
   description: string;
   videoUrl: string;
-  gifUrl: string;
-  gifAlt: string;
+  gifUrl?: string;
+  gifAlt?: string;
   sectionLabel?: string;
   expandedText?: string;
   onButtonClick?: () => void;
   showDemoButton?: boolean;
   viewOutputUrl?: string;
+  previewUrl?: string;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton, viewOutputUrl }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton, viewOutputUrl, previewUrl }: ContentSectionProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -44,11 +45,32 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
           />
         </div>
         <div className="gif-frame !aspect-auto">
-          <img
-            src={gifUrl}
-            alt={gifAlt}
-            className="w-full h-full object-cover block"
-          />
+          {previewUrl ? (
+            <a
+              href={previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full h-full relative group"
+            >
+              <iframe
+                src={previewUrl}
+                title="Dashboard preview"
+                className="w-full h-full border-0 pointer-events-none"
+                style={{ transform: "scale(0.5)", transformOrigin: "top left", width: "200%", height: "200%" }}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/70 text-white text-sm font-medium px-4 py-2 rounded-full">
+                  Open dashboard ↗
+                </span>
+              </div>
+            </a>
+          ) : gifUrl ? (
+            <img
+              src={gifUrl}
+              alt={gifAlt}
+              className="w-full h-full object-cover block"
+            />
+          ) : null}
         </div>
       </div>
 

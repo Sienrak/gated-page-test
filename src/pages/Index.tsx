@@ -70,18 +70,28 @@ const Index = () => {
           onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
         />
 
-        {/* Playbook showcase — between Playbook 2 and gate */}
+        {/* Playbook 3 — Competitor Launch Analyst */}
+        <ContentSection
+          title="Competitor Launch Analyst"
+          description={"You just finished your industry's biggest event of the year. Your competitors all launched new products with web pages, youtube videos, and speaking sessions. Your boss wants a competitive analysis and response by Monday. Here's how to get it done in 15 minutes."}
+          videoUrl="https://www.youtube.com/embed/-RQajGOCutY"
+          sectionLabel="Playbook 3"
+          previewUrl="/enhanced_dashboard.html"
+          viewOutputUrl="/enhanced_dashboard.html"
+        />
+
+        {/* Playbook showcase */}
         <PlaybookShowcase />
 
-        {/* Email gate between Playbook 2 and gated content */}
+        {/* Email gate between playbooks and gated content */}
         {!unlocked && <GateSection onUnlock={handleUnlock} />}
 
-        {/* Gated: ROI Calculator + Playbooks 3 & 4 */}
+        {/* Gated: ROI Calculator + Playbooks 4 & 5 */}
         <GatedContent unlocked={unlocked} onUnlock={handleUnlock}>
           <div className="grid gap-10">
             <ROICalculator />
             {playbooks.slice(2).map((s, i) => (
-              <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 3}`} />
+              <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 4}`} />
             ))}
           </div>
         </GatedContent>
