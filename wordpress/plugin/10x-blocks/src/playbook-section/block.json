@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "10x/playbook-section",
+  "version": "1.0.0",
+  "title": "Playbook Section",
+  "category": "design",
+  "icon": "media-video",
+  "description": "A 3-column content section with copy, video embed, and media (GIF or dashboard preview).",
+  "textdomain": "10x-blocks",
+  "attributes": {
+    "sectionLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "gifUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "gifAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "previewUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "viewOutputUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "expandedText": {
+      "type": "string",
+      "default": ""
+    },
+    "showDemoButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Get the playbook"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "className": true
+  },
+  "render": "file:./render.php"
+}

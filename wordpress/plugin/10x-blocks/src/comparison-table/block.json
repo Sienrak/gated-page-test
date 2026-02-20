@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "10x/comparison-table",
+  "version": "1.0.0",
+  "title": "Playbooks vs Prompts Comparison",
+  "category": "design",
+  "icon": "editor-table",
+  "description": "Comparison image with expandable table showing Playbooks vs Prompts differences.",
+  "textdomain": "10x-blocks",
+  "attributes": {
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": "Playbooks vs Prompts comparison chart"
+    },
+    "rows": {
+      "type": "array",
+      "default": [
+        ["What it is", "Text you type into a chatbot", "Reusable instructions for AI agents"],
+        ["Input", "Manual, free-form text every time", "Structured form fills with variables"],
+        ["Who benefits", "Only the person who wrote it", "Entire team, instantly"],
+        ["Integration", "Disconnected from your tools & data", "Native connectors, knowledge graphs, brand voice"],
+        ["Improvement", "Stays in your head or a doc", "Updates improve it for everyone"],
+        ["Consistency", "Results vary by how you phrase it", "Reliable, repeatable outputs"],
+        ["Workflow", "Single question → single answer", "Multi-step orchestration (research → analyze → deliver)"],
+        ["Skill required", "Prompt engineering expertise", "WRITER Agent collaborates on crafting Playbook instructions"],
+        ["Flexibility", "Finely tuned to a specific use case", "Variables adaptive to different use cases"],
+        ["Output", "Raw text response", "Structured deliverables (reports, dashboards, campaigns)"],
+        ["Scale", "Scales with individual skill", "Scales with team size"]
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "className": true
+  },
+  "render": "file:./render.php"
+}
