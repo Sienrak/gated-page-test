@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import ContentSection from "@/components/ContentSection";
 import ROICalculator from "@/components/ROICalculator";
-import GateSection from "@/components/GateSection";
 import GatedContent from "@/components/GatedContent";
 import UnlockModal from "@/components/UnlockModal";
 import PlaybookShowcase from "@/components/PlaybookShowcase";
-import SideNav from "@/components/SideNav";
 import ABToggle from "@/components/ABToggle";
 import googExplosion from "@/assets/goog-explosion.gif";
 
@@ -44,63 +42,113 @@ const playbooks = [
   },
 ];
 
+const navChapters = [
+  { label: "Intro", id: "intro" },
+  { label: "Playbooks vs Prompts", id: "playbooks-vs-prompts" },
+  { label: "Playbook 1", id: "playbook-1" },
+  { label: "Playbook 2", id: "playbook-2" },
+  { label: "Playbooks by Function", id: "by-function" },
+];
+
+const functionTabs = ["Content", "Product Marketing", "Communications", "Demand Gen", "Social"];
+
 const IndexB = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [comparisonExpanded, setComparisonExpanded] = useState(false);
+  const [sticky, setSticky] = useState(false);
+  const [activeFunction, setActiveFunction] = useState("Content");
+  const navRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const handleUnlock = () => {
     setUnlocked(true);
     setModalOpen(false);
   };
 
-  const handleNavClick = (id: string) => {
+  // Intersection observer for sticky nav
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setSticky(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (id: string) => {
     if (id === "playbooks-vs-prompts") {
       setComparisonExpanded(true);
-      setTimeout(() => {
-        const el = document.getElementById("playbooks-vs-prompts");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 50);
-    } else {
+    }
+    setTimeout(() => {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        const navHeight = navRef.current?.offsetHeight || 0;
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+        window.scrollTo({ top, behavior: "smooth" });
       }
-    }
+    }, 50);
   };
 
   return (
     <div className="w-[min(1400px,96vw)] mx-auto py-16 pb-28">
       <ABToggle />
 
-      {/* Hero — full width, above the sidebar layout */}
+      {/* Hero — full width */}
       <HeroSection />
 
-      <div className="flex gap-8 mt-10">
-        <SideNav onNavClick={handleNavClick} />
+      {/* Sentinel for sticky detection */}
+      <div ref={sentinelRef} className="h-0" />
 
-        <main className="flex-1 min-w-0 grid gap-10">
-          {/* Playbook 1 — always visible, buttons unchanged */}
-        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" previewUrl="/agentic_marketer_dashboard.html" />
+      {/* Horizontal sticky nav */}
+      <div
+        ref={navRef}
+        className={`transition-all duration-300 z-40 ${
+          sticky
+            ? "fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-b border-white/10 shadow-lg"
+            : ""
+        }`}
+      >
+        <nav className={`flex items-center gap-1 overflow-x-auto py-3 px-4 ${sticky ? "w-[min(1400px,96vw)] mx-auto" : ""}`}>
+          {navChapters.map((ch) => (
+            <button
+              key={ch.id}
+              type="button"
+              onClick={() => scrollTo(ch.id)}
+              className="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-secondary/60 hover:bg-secondary text-foreground/80 hover:text-foreground transition-colors cursor-pointer border-none flex-shrink-0"
+            >
+              {ch.label}
+            </button>
+          ))}
+        </nav>
+      </div>
 
-        {/* Playbook 2 — always visible, buttons trigger modal when locked */}
-        <ContentSection
-          {...playbooks[1]}
-          sectionLabel="Playbook 2"
-          onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
-        />
+      {/* Spacer when nav is sticky so content doesn't jump */}
+      {sticky && <div style={{ height: navRef.current?.offsetHeight || 52 }} />}
 
-        {/* Playbook 3 — Competitor Launch Analyst */}
-        <ContentSection
-          title="Competitor Launch Analyst"
-          description={"You just finished your industry's biggest event of the year. Your competitors all launched new products with web pages, youtube videos, and speaking sessions. Your boss wants a competitive analysis and response by Monday. Here's how to get it done in 15 minutes."}
-          videoUrl="https://www.youtube.com/embed/-RQajGOCutY"
-          sectionLabel="Playbook 3"
-          previewUrl="/enhanced_dashboard.html"
-          viewOutputUrl="/enhanced_dashboard.html"
-        />
+      <main className="grid gap-10 mt-8">
+        {/* Intro Copy and Context */}
+        <section id="intro" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+            Intro Copy and Context
+          </div>
+          <h2 className="text-2xl font-display font-semibold mb-4 text-[#3c2a46]">
+            Why Playbooks Change the Game
+          </h2>
+          <div className="text-foreground/80 leading-relaxed space-y-4">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+            <p>
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+            <p>
+              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.
+            </p>
+          </div>
+        </section>
 
         {/* Playbooks vs Prompts comparison */}
         <section id="playbooks-vs-prompts" className="glass-section p-7">
@@ -168,30 +216,79 @@ const IndexB = () => {
           </div>
         </section>
 
-        {/* Playbook showcase */}
-        <PlaybookShowcase />
+        {/* Playbook 1 */}
+        <div id="playbook-1">
+          <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" previewUrl="/agentic_marketer_dashboard.html" />
+        </div>
 
-        {/* Email gate between playbooks and gated content */}
-        {!unlocked && <GateSection onUnlock={handleUnlock} />}
+        {/* Playbook 2 */}
+        <div id="playbook-2">
+          <ContentSection
+            {...playbooks[1]}
+            sectionLabel="Playbook 2"
+            onButtonClick={!unlocked ? () => setModalOpen(true) : undefined}
+          />
+        </div>
 
-        {/* Gated: ROI Calculator + Playbooks 4 & 5 */}
+        {/* Playbooks by Function — horizontal selector */}
+        <section id="by-function" className="glass-section p-7">
+          <h2 className="text-xl font-display font-semibold mb-5 text-[#3c2a46]">
+            Playbooks by Function
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {functionTabs.map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => {
+                  setActiveFunction(tab);
+                  if (!unlocked) setModalOpen(true);
+                }}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold border-none cursor-pointer transition-all duration-200 ${
+                  activeFunction === tab
+                    ? "bg-[#5551ff] text-white shadow-md"
+                    : "bg-secondary/60 text-foreground/70 hover:bg-secondary hover:text-foreground"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Everything below is gated */}
         <GatedContent unlocked={unlocked} onUnlock={handleUnlock}>
           <div className="grid gap-10">
+            {/* Playbook Showcase */}
+            <PlaybookShowcase />
+
+            {/* Playbook 3 — Competitor Launch Analyst */}
+            <ContentSection
+              title="Competitor Launch Analyst"
+              description={"You just finished your industry's biggest event of the year. Your competitors all launched new products with web pages, youtube videos, and speaking sessions. Your boss wants a competitive analysis and response by Monday. Here's how to get it done in 15 minutes."}
+              videoUrl="https://www.youtube.com/embed/-RQajGOCutY"
+              sectionLabel="Playbook 3"
+              previewUrl="/enhanced_dashboard.html"
+              viewOutputUrl="/enhanced_dashboard.html"
+            />
+
+            {/* ROI Calculator */}
             <ROICalculator />
+
+            {/* Playbooks 4 & 5 */}
             {playbooks.slice(2).map((s, i) => (
               <ContentSection key={i + 2} {...s} sectionLabel={`Playbook ${i + 4}`} />
             ))}
           </div>
         </GatedContent>
 
-        {/* Modal triggered by Playbook 2 buttons */}
+        {/* Modal triggered by gated actions */}
         <UnlockModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
           onUnlock={handleUnlock}
         />
-        </main>
-      </div>
+      </main>
     </div>
   );
 };
