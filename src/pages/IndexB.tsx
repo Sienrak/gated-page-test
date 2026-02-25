@@ -44,7 +44,7 @@ const playbooks = [
   },
 ];
 
-const Index = () => {
+const IndexB = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [comparisonExpanded, setComparisonExpanded] = useState(false);
@@ -196,4 +196,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default IndexB;
