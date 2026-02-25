@@ -48,7 +48,11 @@ const navChapters = [
   { label: "Playbook 1", id: "playbook-1" },
   { label: "Playbook 2", id: "playbook-2" },
   { label: "Playbooks by Function", id: "by-function" },
+  { label: "Content", id: "content-section" },
+  { label: "Field", id: "field-section" },
 ];
+
+const pinkNavIds = new Set(["content-section", "field-section"]);
 
 const functionTabs = ["Content", "Product Marketing", "Communications", "Demand Gen", "Social"];
 
@@ -58,6 +62,8 @@ const IndexB = () => {
   const [comparisonExpanded, setComparisonExpanded] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [activeFunction, setActiveFunction] = useState("Content");
+  const [contentExpanded, setContentExpanded] = useState(false);
+  const [fieldExpanded, setFieldExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -117,7 +123,11 @@ const IndexB = () => {
               key={ch.id}
               type="button"
               onClick={() => scrollTo(ch.id)}
-              className="whitespace-nowrap px-6 py-3 rounded-full text-base font-semibold border-none cursor-pointer flex-shrink-0 transition-all duration-200 bg-secondary/60 hover:bg-[#5551ff]/10 text-foreground/90 hover:text-[#5551ff] hover:shadow-[0_0_12px_rgba(85,81,255,0.2)]"
+              className={`whitespace-nowrap px-6 py-3 rounded-full text-base font-semibold border-none cursor-pointer flex-shrink-0 transition-all duration-200 ${
+                pinkNavIds.has(ch.id)
+                  ? "bg-pink-200 text-foreground/90 hover:bg-pink-300 hover:shadow-[0_0_12px_rgba(236,72,153,0.25)]"
+                  : "bg-secondary/60 hover:bg-[#5551ff]/10 text-foreground/90 hover:text-[#5551ff] hover:shadow-[0_0_12px_rgba(85,81,255,0.2)]"
+              }`}
             >
               {ch.label}
             </button>
@@ -236,23 +246,32 @@ const IndexB = () => {
             Playbooks by Function
           </h2>
           <div className="flex flex-wrap gap-2">
-            {functionTabs.map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => {
-                  setActiveFunction(tab);
-                  if (!unlocked) setModalOpen(true);
-                }}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold border-none cursor-pointer transition-all duration-200 ${
-                  activeFunction === tab
-                    ? "bg-[#5551ff] text-white shadow-md"
-                    : "bg-secondary/60 text-foreground/70 hover:bg-secondary hover:text-foreground"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+            {functionTabs.map((tab) => {
+              const isLive = tab === "Content" || tab === "Field";
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  onClick={() => {
+                    setActiveFunction(tab);
+                    if (isLive) {
+                      scrollTo(tab === "Content" ? "content-section" : "field-section");
+                    } else if (!unlocked) {
+                      setModalOpen(true);
+                    }
+                  }}
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold border-none cursor-pointer transition-all duration-200 ${
+                    isLive
+                      ? "bg-pink-200 text-foreground/90 hover:bg-pink-300"
+                      : activeFunction === tab
+                        ? "bg-[#5551ff] text-white shadow-md"
+                        : "bg-secondary/60 text-foreground/70 hover:bg-secondary hover:text-foreground"
+                  }`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
           </div>
         </section>
 
@@ -281,6 +300,77 @@ const IndexB = () => {
             ))}
           </div>
         </GatedContent>
+
+        {/* ── Content Section (ungated) ── */}
+        <section id="content-section" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-pink-500">
+            Content
+          </div>
+          <ContentSection {...playbooks[0]} sectionLabel="Content Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" previewUrl="/agentic_marketer_dashboard.html" />
+
+          <div className="flex flex-col items-center mt-4">
+            <button
+              type="button"
+              onClick={() => setContentExpanded(!contentExpanded)}
+              className="group flex items-center justify-center w-10 h-10 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors cursor-pointer border-none"
+              aria-label={contentExpanded ? "Collapse" : "Expand"}
+            >
+              <ChevronDown
+                className={`w-5 h-5 text-pink-400 transition-transform duration-300 ${
+                  contentExpanded ? "rotate-180" : "animate-bounce"
+                }`}
+              />
+            </button>
+            <div
+              className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
+                contentExpanded ? "max-h-[400px] opacity-100 mt-5" : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="glass-panel p-6 text-center text-lg text-foreground/60 font-medium">
+                Content Playbooks 2, 3, 4
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Field Section (ungated) ── */}
+        <section id="field-section" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-pink-500">
+            Field
+          </div>
+          <ContentSection
+            title="Competitor Launch Analyst"
+            description={"You just finished your industry's biggest event of the year. Your competitors all launched new products with web pages, youtube videos, and speaking sessions. Your boss wants a competitive analysis and response by Monday. Here's how to get it done in 15 minutes."}
+            videoUrl="https://www.youtube.com/embed/-RQajGOCutY"
+            sectionLabel="Field Playbook 1"
+            previewUrl="/enhanced_dashboard.html"
+            viewOutputUrl="/enhanced_dashboard.html"
+          />
+
+          <div className="flex flex-col items-center mt-4">
+            <button
+              type="button"
+              onClick={() => setFieldExpanded(!fieldExpanded)}
+              className="group flex items-center justify-center w-10 h-10 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors cursor-pointer border-none"
+              aria-label={fieldExpanded ? "Collapse" : "Expand"}
+            >
+              <ChevronDown
+                className={`w-5 h-5 text-pink-400 transition-transform duration-300 ${
+                  fieldExpanded ? "rotate-180" : "animate-bounce"
+                }`}
+              />
+            </button>
+            <div
+              className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
+                fieldExpanded ? "max-h-[400px] opacity-100 mt-5" : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="glass-panel p-6 text-center text-lg text-foreground/60 font-medium">
+                Field Playbooks 2, 3, 4
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Modal triggered by gated actions */}
         <UnlockModal
