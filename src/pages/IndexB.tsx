@@ -107,25 +107,17 @@ const IndexB = () => {
         ref={navRef}
         className={`transition-all duration-300 z-40 ${
           sticky
-            ? "fixed top-0 left-0 right-0 backdrop-blur-xl border-b border-white/20"
+            ? "fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-b border-black/5 shadow-md"
             : ""
         }`}
-        style={sticky ? {
-          background: "linear-gradient(135deg, rgba(60,42,70,0.85) 0%, rgba(85,81,255,0.15) 50%, rgba(60,42,70,0.85) 100%)",
-          boxShadow: "0 4px 30px rgba(85,81,255,0.25), 0 1px 0 rgba(255,255,255,0.1) inset",
-        } : undefined}
       >
-        <nav className={`flex items-center justify-center gap-2 overflow-x-auto py-3 px-4 pl-20 ${sticky ? "w-[min(1400px,96vw)] mx-auto" : ""}`}>
+        <nav className={`flex items-center justify-center gap-3 overflow-x-auto py-4 px-6 pl-20 ${sticky ? "w-[min(1400px,96vw)] mx-auto" : ""}`}>
           {navChapters.map((ch) => (
             <button
               key={ch.id}
               type="button"
               onClick={() => scrollTo(ch.id)}
-              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold border-none cursor-pointer flex-shrink-0 transition-all duration-200 ${
-                sticky
-                  ? "bg-white/15 text-white/90 hover:bg-white/25 hover:text-white hover:shadow-[0_0_12px_rgba(85,81,255,0.4)]"
-                  : "bg-secondary/60 hover:bg-secondary text-foreground/80 hover:text-foreground"
-              }`}
+              className="whitespace-nowrap px-6 py-3 rounded-full text-base font-semibold border-none cursor-pointer flex-shrink-0 transition-all duration-200 bg-secondary/60 hover:bg-[#5551ff]/10 text-foreground/90 hover:text-[#5551ff] hover:shadow-[0_0_12px_rgba(85,81,255,0.2)]"
             >
               {ch.label}
             </button>
