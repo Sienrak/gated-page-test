@@ -1,4 +1,6 @@
-# Welcome to your Lovable project
+# Ben Popper's Personal Landing Page Project
+
+This is a personal project by **Ben Popper**, a **Content Marketing Director**, building a vibe-coded landing page.
 
 ## Project info
 
