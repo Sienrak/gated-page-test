@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 
 interface ContentSectionProps {
@@ -9,13 +9,14 @@ interface ContentSectionProps {
   gifAlt?: string;
   sectionLabel?: string;
   expandedText?: string;
+  expandedContent?: ReactNode;
   onButtonClick?: () => void;
   showDemoButton?: boolean;
   viewOutputUrl?: string;
   previewUrl?: string;
 }
 
-const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, onButtonClick, showDemoButton, viewOutputUrl, previewUrl }: ContentSectionProps) => {
+const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionLabel, expandedText, expandedContent, onButtonClick, showDemoButton, viewOutputUrl, previewUrl }: ContentSectionProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -74,7 +75,7 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
         </div>
       </div>
 
-      {expandedText && (
+      {(expandedText || expandedContent) && (
         <div className="flex flex-col items-center mt-4">
           <button
             type="button"
@@ -93,9 +94,15 @@ const ContentSection = ({ title, description, videoUrl, gifUrl, gifAlt, sectionL
               expanded ? "max-h-[600px] opacity-100 mt-5" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="whitespace-pre-line text-foreground/80">
-              {expandedText}
-            </div>
+            {expandedContent ? (
+              <div className="text-foreground/80">
+                {expandedContent}
+              </div>
+            ) : (
+              <div className="whitespace-pre-line text-foreground/80">
+                {expandedText}
+              </div>
+            )}
           </div>
         </div>
       )}

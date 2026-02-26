@@ -62,7 +62,6 @@ const IndexB = () => {
   const [comparisonExpanded, setComparisonExpanded] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [activeFunction, setActiveFunction] = useState("Content");
-  const [fieldExpanded, setFieldExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -314,37 +313,41 @@ const IndexB = () => {
             Field
           </div>
           <ContentSection
-            title="Competitor Launch Analyst"
-            description={"You just finished your industry's biggest event of the year. Your competitors all launched new products with web pages, youtube videos, and speaking sessions. Your boss wants a competitive analysis and response by Monday. Here's how to get it done in 15 minutes."}
-            videoUrl="https://www.youtube.com/embed/-RQajGOCutY"
+            title="Swag Tracking Agent"
+            description={"Stop checking apps and entering tracking codes. This agent tracks swag and notifies you by Slack when something is worth your attention, letting you get back to working the event IRL."}
+            videoUrl="https://www.youtube.com/embed/xLUP7DJ30Z8"
             sectionLabel="Field Playbook 1"
             previewUrl="/enhanced_dashboard.html"
             viewOutputUrl="/enhanced_dashboard.html"
-          />
-
-          <div className="flex flex-col items-center mt-4">
-            <button
-              type="button"
-              onClick={() => setFieldExpanded(!fieldExpanded)}
-              className="group flex items-center justify-center w-10 h-10 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors cursor-pointer border-none"
-              aria-label={fieldExpanded ? "Collapse" : "Expand"}
-            >
-              <ChevronDown
-                className={`w-5 h-5 text-pink-400 transition-transform duration-300 ${
-                  fieldExpanded ? "rotate-180" : "animate-bounce"
-                }`}
-              />
-            </button>
-            <div
-              className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
-                fieldExpanded ? "max-h-[400px] opacity-100 mt-5" : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="glass-panel p-6 text-center text-lg text-foreground/60 font-medium">
-                Field Playbooks 2, 3, 4
+            expandedContent={
+              <div className="space-y-4">
+                <div>
+                  <p className="font-semibold">1. Event research and logistics</p>
+                  <p className="mt-2">
+                    Generate comprehensive event briefs, attendee research, speaker bios, and attendee lookbooks automatically. WRITER Agent pulls data from multiple sources to create complete event intelligence packages that inform your strategy and execution.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <a
+                    href="https://app.writer.com/share/writer-agent/3c0a1040-ee20-42a9-b78b-9abca8bc4a03"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline underline-offset-2"
+                  >
+                    Event ideation
+                  </a>
+                  <a
+                    href="https://app.writer.com/share/writer-agent/7aa318f0-1483-4be3-a468-a56aa5a13d57"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-primary underline underline-offset-2"
+                  >
+                    Event lookbook
+                  </a>
+                </div>
               </div>
-            </div>
-          </div>
+            }
+          />
         </section>
 
         {/* Modal triggered by gated actions */}
