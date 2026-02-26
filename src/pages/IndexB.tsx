@@ -62,7 +62,6 @@ const IndexB = () => {
   const [comparisonExpanded, setComparisonExpanded] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [activeFunction, setActiveFunction] = useState("Content");
-  const [contentExpanded, setContentExpanded] = useState(false);
   const [fieldExpanded, setFieldExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -307,30 +306,6 @@ const IndexB = () => {
             Content
           </div>
           <ContentSection {...playbooks[0]} sectionLabel="Content Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" previewUrl="/agentic_marketer_dashboard.html" />
-
-          <div className="flex flex-col items-center mt-4">
-            <button
-              type="button"
-              onClick={() => setContentExpanded(!contentExpanded)}
-              className="group flex items-center justify-center w-10 h-10 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors cursor-pointer border-none"
-              aria-label={contentExpanded ? "Collapse" : "Expand"}
-            >
-              <ChevronDown
-                className={`w-5 h-5 text-pink-400 transition-transform duration-300 ${
-                  contentExpanded ? "rotate-180" : "animate-bounce"
-                }`}
-              />
-            </button>
-            <div
-              className={`w-full overflow-hidden transition-all duration-500 ease-in-out ${
-                contentExpanded ? "max-h-[400px] opacity-100 mt-5" : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="glass-panel p-6 text-center text-lg text-foreground/60 font-medium">
-                Content Playbooks 2, 3, 4
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* ── Field Section (ungated) ── */}
