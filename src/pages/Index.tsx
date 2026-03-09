@@ -104,7 +104,7 @@ const Index = () => {
 
         <section id="dashboards-item-1" className="glass-section p-7">
           <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
-            Dashboards Tab: Item 1
+            Competitor launch analysis
           </div>
           <h3 className="m-0 text-[clamp(1.5rem,2.2vw,2rem)] font-semibold leading-tight text-[#3c2a46]">
             Competitor product launch analysis and strategy
@@ -124,6 +124,34 @@ const Index = () => {
             <iframe
               src="/robot-butler-dashboard.html"
               title="Competitor product launch analysis and strategy dashboard"
+              className="w-full h-[760px] border-0 block"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
+        <section id="dashboards-item-2" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+            Webinar to derivative content
+          </div>
+          <h3 className="m-0 text-[clamp(1.5rem,2.2vw,2rem)] font-semibold leading-tight text-[#3c2a46]">
+            Webinar to derivative content dashboard
+          </h3>
+          <div className="mt-3 mb-4 text-sm text-foreground/70">
+            Click in the embed to interact, use fullscreen controls, or open in a new tab.
+          </div>
+          <a
+            href="https://ben10x.netlify.app/agentic_marketer_dashboard.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-4 rounded-full px-4 py-2 text-sm font-semibold no-underline bg-secondary text-secondary-foreground hover:-translate-y-0.5 transition-transform"
+          >
+            Open dashboard in new tab
+          </a>
+          <div className="rounded-xl overflow-hidden border border-white/20 bg-white/30">
+            <iframe
+              src="https://ben10x.netlify.app/agentic_marketer_dashboard.html"
+              title="Webinar to derivative content dashboard"
               className="w-full h-[760px] border-0 block"
               allowFullScreen
             />

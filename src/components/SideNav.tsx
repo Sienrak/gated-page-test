@@ -22,7 +22,8 @@ const SideNav = ({ onNavClick }: SideNavProps) => {
   ];
 
   const dashboardSubItems = [
-    { label: "Dashboards Tab: Item 1", id: "dashboards-item-1" },
+    { label: "Competitor launch analysis", id: "dashboards-item-1" },
+    { label: "Webinar to derivative content", id: "dashboards-item-2" },
   ];
 
   return (
