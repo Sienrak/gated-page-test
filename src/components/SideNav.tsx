@@ -7,6 +7,7 @@ interface SideNavProps {
 
 const SideNav = ({ onNavClick }: SideNavProps) => {
   const [functionOpen, setFunctionOpen] = useState(false);
+  const [dashboardsOpen, setDashboardsOpen] = useState(true);
 
   const navItems = [
     { label: "Intro to Playbooks", id: "intro" },
@@ -18,6 +19,10 @@ const SideNav = ({ onNavClick }: SideNavProps) => {
     { label: "Demand Gen", id: "demand-gen" },
     { label: "Field", id: "field" },
     { label: "Social", id: "social" },
+  ];
+
+  const dashboardSubItems = [
+    { label: "Dashboards Tab: Item 1", id: "dashboards-item-1" },
   ];
 
   return (
@@ -67,6 +72,43 @@ const SideNav = ({ onNavClick }: SideNavProps) => {
               <a
                 key={item.id}
                 href={`#${item.id}`}
+                className="block px-3 py-1.5 rounded-lg text-sm text-muted-foreground hover:bg-white/60 hover:text-foreground transition-colors no-underline"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setDashboardsOpen(!dashboardsOpen)}
+          className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm text-foreground/80 hover:bg-white/60 hover:text-foreground transition-colors cursor-pointer bg-transparent border-none text-left"
+        >
+          <span>Dashboards</span>
+          <ChevronDown
+            className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+              dashboardsOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            dashboardsOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="pl-3 grid gap-0.5">
+            {dashboardSubItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  if (onNavClick) {
+                    e.preventDefault();
+                    onNavClick(item.id);
+                  }
+                }}
                 className="block px-3 py-1.5 rounded-lg text-sm text-muted-foreground hover:bg-white/60 hover:text-foreground transition-colors no-underline"
               >
                 {item.label}

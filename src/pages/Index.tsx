@@ -102,6 +102,34 @@ const Index = () => {
           viewOutputUrl="/enhanced_dashboard.html"
         />
 
+        <section id="dashboards-item-1" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+            Dashboards Tab: Item 1
+          </div>
+          <h3 className="m-0 text-[clamp(1.5rem,2.2vw,2rem)] font-semibold leading-tight text-[#3c2a46]">
+            Competitor product launch analysis and strategy
+          </h3>
+          <div className="mt-3 mb-4 text-sm text-foreground/70">
+            Click in the embed to interact, use fullscreen controls, or open in a new tab.
+          </div>
+          <a
+            href="/robot-butler-dashboard.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-4 rounded-full px-4 py-2 text-sm font-semibold no-underline bg-secondary text-secondary-foreground hover:-translate-y-0.5 transition-transform"
+          >
+            Open dashboard in new tab
+          </a>
+          <div className="rounded-xl overflow-hidden border border-white/20 bg-white/30">
+            <iframe
+              src="/robot-butler-dashboard.html"
+              title="Competitor product launch analysis and strategy dashboard"
+              className="w-full h-[760px] border-0 block"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
         {/* Playbooks vs Prompts comparison */}
         <section id="playbooks-vs-prompts" className="glass-section p-7">
           <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
