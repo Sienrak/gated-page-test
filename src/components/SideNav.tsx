@@ -24,6 +24,7 @@ const SideNav = ({ onNavClick }: SideNavProps) => {
   const dashboardSubItems = [
     { label: "Competitor launch analysis", id: "dashboards-item-1" },
     { label: "Webinar to derivative content", id: "dashboards-item-2" },
+    { label: "Playbook to Publish", id: "dashboards-item-3" },
   ];
 
   return (

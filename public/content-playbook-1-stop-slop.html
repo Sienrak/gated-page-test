@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Dashboard - Agentic AI Governance Playbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #E5D4F5 0%, #C9B3E8 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .tabs-container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 20px 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .tab-button.active {
+            background: #fff;
+            color: #A78BFA;
+            border-bottom-color: #A78BFA;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Executive Summary Styles */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border-radius: 12px;
+            padding: 28px;
+            border-left: 5px solid #A78BFA;
+        }
+
+        .summary-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-card .icon {
+            font-size: 24px;
+        }
+
+        .summary-card p {
+            font-size: 14px;
+            color: #434343;
+            line-height: 1.8;
+        }
+
+        .summary-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-card li {
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #434343;
+        }
+
+        .summary-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #A78BFA;
+            font-weight: 600;
+        }
+
+        .highlight-stat {
+            display: inline-block;
+            background: #A78BFA;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 500;
+            margin: 4px;
+            font-size: 13px;
+        }
+
+        /* Asset Cards */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+        .asset-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #A78BFA;
+            transition: all 0.3s ease;
+        }
+
+        .asset-card:hover {
+            box-shadow: 0 6px 20px rgba(167,139,250,0.2);
+            transform: translateY(-2px);
+        }
+
+        .asset-type {
+            font-size: 11px;
+            font-weight: 600;
+            color: #A78BFA;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .asset-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 16px;
+        }
+
+        .asset-content {
+            font-size: 13px;
+            color: #434343;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .asset-meta {
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 11px;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Channel Header */
+        .channel-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .channel-header h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .channel-header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #A78BFA;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8B6FD9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs-nav {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+                text-align: left;
+            }
+
+            .assets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Campaign Dashboard</h1>
+            <p>The Agentic AI Governance Playbook - Complete Multi-Channel Asset Suite</p>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs-nav">
+                <button class="tab-button active" onclick="openTab(event, 'summary')">📊 Executive Summary</button>
+                <button class="tab-button" onclick="openTab(event, 'linkedin')">💼 LinkedIn (4 Assets)</button>
+                <button class="tab-button" onclick="openTab(event, 'twitter')">🐦 Twitter/X (4 Assets)</button>
+                <button class="tab-button" onclick="openTab(event, 'email')">📧 Email (3 Assets)</button>
+                <button class="tab-button" onclick="openTab(event, 'sales')">💰 Sales Tools (3 Assets)</button>
+                <button class="tab-button" onclick="openTab(event, 'distribution')">📢 Distribution (3 Assets)</button>
+                <button class="tab-button" onclick="openTab(event, 'seo')">🔍 SEO (3 Assets)</button>
+            </div>
+
+            <!-- Executive Summary Tab -->
+            <div id="summary" class="tab-content active">
+                <div class="channel-header">
+                    <h2>Executive Summary</h2>
+                    <p>Complete overview of your 20-asset campaign suite</p>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h3><span class="icon">📦</span> Campaign Overview</h3>
+                        <ul>
+                            <li><strong>20 unique assets</strong> across 8 marketing channels</li>
+                            <li><strong>Target Audience:</strong> CMOs and Marketing Leaders</li>
+                            <li><strong>Core Message:</strong> Transform AI governance from bottleneck to strategic enabler</li>
+                            <li><strong>Primary CTA:</strong> Download the Agentic AI Governance Playbook</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><span class="icon">🎯</span> Performance Targets</h3>
+                        <p><strong>30-Day Goals:</strong></p>
+                        <div style="margin-top: 12px;">
+                            <span class="highlight-stat">500+ downloads</span>
+                            <span class="highlight-stat">75+ MQLs</span>
+                            <span class="highlight-stat">15+ SQLs</span>
+                            <span class="highlight-stat">$500K+ pipeline</span>
+                            <span class="highlight-stat">5:1 ROI</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><span class="icon">💡</span> Core Positioning</h3>
+                        <ul>
+                            <li><strong>The Action Gap:</strong> Divide between what AI says and what it does</li>
+                            <li><strong>Governance-as-Enablement:</strong> Strategic function that unlocks speed</li>
+                            <li><strong>The Agentic Compact:</strong> 6 Articles for governing autonomous AI</li>
+                            <li><strong>Operational AI Trust:</strong> Measurable confidence in digital workforce</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><span class="icon">✅</span> Quality Assurance</h3>
+                        <ul>
+                            <li><strong>Brand Alignment:</strong> 100% Writer voice and tone compliance</li>
+                            <li><strong>Factual Accuracy:</strong> All claims verified against playbook</li>
+                            <li><strong>The 6 Articles:</strong> Systemic safety, Foundational transparency, Actionable explainability, Continuous observability, Workforce enablement, The human mandate</li>
+                            <li><strong>Ready for deployment</strong> across all channels</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><span class="icon">📊</span> Asset Breakdown</h3>
+                        <ul>
+                            <li>LinkedIn: 4 professional assets (announcement, carousel, thought leadership, engagement)</li>
+                            <li>Twitter/X: 4 concise assets (tweet, thread, quotes, polls)</li>
+                            <li>Email: 3 campaigns (warm nurture, cold nurture, newsletter)</li>
+                            <li>Sales: 3 enablement tools (one-pager, outreach, discovery)</li>
+                            <li>Distribution: 3 amplification assets (partner, employee, paid)</li>
+                            <li>SEO: 3 optimization assets (meta, social, resources)</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3><span class="icon">🚀</span> Next Steps</h3>
+                        <ul>
+                            <li>Review assets and customize with brand elements</li>
+                            <li>Schedule posts according to Week 1 distribution calendar</li>
+                            <li>Brief sales team on enablement materials</li>
+                            <li>Launch campaign with LinkedIn announcement</li>
+                            <li>Monitor metrics and optimize based on performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LinkedIn Tab -->
+            <div id="linkedin" class="tab-content">
+                <div class="channel-header">
+                    <h2>LinkedIn Assets</h2>
+                    <p>4 professional assets for thought leadership and engagement</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Announcement Post</div>
+                        <div class="asset-title">Launch Announcement (280 words)</div>
+                        <div class="asset-content">
+                            Your AI workforce just got a promotion—from answering questions to taking action.
+                            <br><br>
+                            But here's the problem: The governance frameworks we built for passive AI can't supervise autonomous agents that orchestrate workflows, access systems, and make real-time decisions. Traditional "responsible AI" was designed for a world where AI suggested and humans acted. It wasn't built to cross what we call the Action Gap—the divide between what AI says and what it does.
+                            <br><br>
+                            That's why we created The Agentic Compact—a new framework for governing AI that actually works. This isn't about slowing down innovation with compliance theater. It's Governance-as-Enablement: the strategic function that lets you move fast, safely.
+                            <br><br>
+                            Our new playbook reveals:
+                            <br>✓ Why traditional AI governance fails for agentic systems
+                            <br>✓ The 6 articles of the Agentic Compact
+                            <br>✓ How to achieve Operational AI Trust across your enterprise
+                            <br>✓ Real-world implementation strategies from industry leaders
+                            <br><br>
+                            Think of governance less like a brake pedal and more like highway guardrails—it enables you to accelerate, not slow down. Download the full playbook to discover how to supervise your new digital workforce with confidence.
+                            <br><br>
+                            [Link to playbook]
+                            <br><br>
+                            #AgenticAI #AIGovernance #EnterpriseAI #ResponsibleAI #MarketingTech
+                        </div>
+                        <div class="asset-meta">Includes: Hook, value prop, 4 key points, CTA, 5 hashtags</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Carousel/Thread</div>
+                        <div class="asset-title">5-Slide Educational Series</div>
+                        <div class="asset-content">
+                            <strong>Slide 1: Hook</strong>
+                            <br>"Your AI governance framework is obsolete. Here's why 👇"
+                            <br><br>
+                            <strong>Slide 2: The Problem</strong>
+                            <br>"Traditional responsible AI governance:
+                            <br>- Controls model OUTPUTS
+                            <br>- Reviews final results
+                            <br>- Audits quarterly
+                            <br>- Focuses on content moderation
+                            <br><br>This worked when AI only suggested. But agentic AI ACTS."
+                            <br><br>
+                            <strong>Slide 3: The Action Gap</strong>
+                            <br>"Agentic AI crosses the Action Gap—the divide between what AI says and what it does.
+                            <br><br>It orchestrates workflows, accesses enterprise systems, makes real-time decisions, and executes multi-step processes.
+                            <br><br>Your old governance playbook can't keep up."
+                            <br><br>
+                            <strong>Slide 4: The Solution</strong>
+                            <br>"Introducing the Agentic Compact:
+                            <br>6 Articles for governing autonomous AI systems
+                            <br><br>• Article I: Systemic safety and containment
+                            <br>• Article II: Foundational transparency
+                            <br>• Article III: Actionable explainability
+                            <br>• Article IV: Continuous Observability
+                            <br>• Article V: Workforce enablement and education
+                            <br>• Article VI: The human mandate"
+                            <br><br>
+                            <strong>Slide 5: The Outcome</strong>
+                            <br>"This is Governance-as-Enablement:
+                            <br>The strategic function that unlocks speed instead of slowing it down.
+                            <br><br>Get the full playbook to build operational AI trust across your enterprise.
+                            <br><br>[Link]"
+                        </div>
+                        <div class="asset-meta">Format: Multi-post carousel with visual storytelling</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Thought Leadership</div>
+                        <div class="asset-title">Strategic Perspective (400 words)</div>
+                        <div class="asset-content">
+                            Is governance the brake pedal or the accelerator for AI adoption?
+                            <br><br>
+                            Most CMOs see governance as a necessary evil—a compliance checkbox that slows down innovation. But that's because they're applying yesterday's frameworks to tomorrow's technology.
+                            <br><br>
+                            Here's what changed: AI graduated from passive assistant to active agent. Your AI workforce isn't just answering questions anymore. It's executing campaigns, orchestrating workflows, making budget decisions, and interfacing with your enterprise systems. When AI can independently execute a process, everything about how you govern it must change.
+                            <br><br>
+                            Traditional responsible AI governance focused on controlling what a model might say. It was designed for a world where AI suggested and humans acted—where you could review outputs before they went live. That framework breaks down the moment AI crosses what we call the Action Gap and starts taking action on its behalf.
+                            <br><br>
+                            Consider the difference: When an AI agent manages your paid media budget across platforms, adjusts bids in real-time, or automatically generates and publishes content variants, periodic audits are worthless. By the time you review what happened last quarter, your agent has already made thousands of decisions.
+                            <br><br>
+                            The irony? Poor governance actually slows AI adoption more than strong governance does. Without operational trust—the measurable confidence that your digital workforce will act safely and produce value—business leaders won't approve wider deployment. They stay stuck in endless pilots.
+                            <br><br>
+                            The answer isn't more rules. It's a new operational contract for your new digital workforce. It's governance that enables speed through transparency, containment, and continuous observability. Think highway guardrails, not speed bumps.
+                            <br><br>
+                            The enterprises scaling AI successfully aren't the ones with the lightest governance. They're the ones with governance that matches the technology—frameworks built for supervision of actions, not just moderation of outputs.
+                            <br><br>
+                            What's your governance philosophy?
+                        </div>
+                        <div class="asset-meta">Provocative insight + open-ended question for engagement</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Comment-Optimized</div>
+                        <div class="asset-title">Engagement Driver (130 words)</div>
+                        <div class="asset-content">
+                            Let me share something that's changing how we think about AI governance...
+                            <br><br>
+                            Your marketing AI isn't just generating copy anymore. It's managing budgets, executing campaigns, and making real-time decisions across your entire stack.
+                            <br><br>
+                            But here's the thing: The governance frameworks we built for "responsible AI" can't supervise autonomous agents. They were designed for AI that suggested, not AI that acts.
+                            <br><br>
+                            We call this the Action Gap—and crossing it requires a completely new approach to oversight.
+                            <br><br>
+                            The irony? Strong governance actually accelerates AI adoption, not slows it down. When you have operational trust, business leaders approve wider deployment. Without it, you're stuck in pilot purgatory.
+                            <br><br>
+                            <strong>How is your team approaching AI governance for autonomous agents?</strong>
+                        </div>
+                        <div class="asset-meta">Designed for maximum comment engagement and discussion</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Twitter Tab -->
+            <div id="twitter" class="tab-content">
+                <div class="channel-header">
+                    <h2>Twitter/X Assets</h2>
+                    <p>4 concise assets for rapid engagement</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Main Tweet</div>
+                        <div class="asset-title">Launch Announcement</div>
+                        <div class="asset-content">
+                            Your AI workforce just graduated from answering questions to taking action. Traditional governance frameworks can't keep up. 
+                            <br><br>
+                            Introducing the Agentic Compact—a new playbook for supervising autonomous AI systems. [link]
+                            <br><br>
+                            #AgenticAI #AIGovernance
+                        </div>
+                        <div class="asset-meta">Under 280 characters | 2 hashtags</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Twitter Thread</div>
+                        <div class="asset-title">7-Tweet Educational Series</div>
+                        <div class="asset-content">
+                            🧵 Your AI governance framework is obsolete. Here's why—and what to do about it. (1/7)
+                            <br><br>[link to playbook]
+                            <br><br>
+                            Traditional "responsible AI" governance was built for passive models. It focuses on controlling outputs, reviewing final results, and periodic audits. (2/7)
+                            <br><br>
+                            But agentic AI doesn't just generate content—it executes workflows, accesses enterprise systems, and makes real-time decisions. It crosses the Action Gap between what AI says and what it does. (3/7)
+                            <br><br>
+                            Consider: When an AI agent manages your paid media budget and adjusts bids in real-time, a quarterly audit is worthless. By then, it's made thousands of decisions. (4/7)
+                            <br><br>
+                            The solution? The Agentic Compact—6 Articles for governing autonomous systems:
+                            <br>• Article I: Systemic safety and containment
+                            <br>• Article II: Foundational transparency
+                            <br>• Article III: Actionable explainability
+                            <br>• Article IV: Continuous Observability
+                            <br>• Article V: Workforce enablement and education
+                            <br>• Article VI: The human mandate (5/7)
+                            <br><br>
+                            Here's the contrarian take: Strong governance accelerates AI adoption, not slows it. Without operational trust, business leaders won't approve wider deployment. You stay stuck in pilot purgatory. (6/7)
+                            <br><br>
+                            Download the full playbook to discover how governance becomes your strategic enabler, not your bottleneck. [link] (7/7)
+                        </div>
+                        <div class="asset-meta">Complete 7-tweet thread with contrarian insight</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Quote Tweets</div>
+                        <div class="asset-title">3 Amplification Quotes</div>
+                        <div class="asset-content">
+                            <strong>Quote Tweet 1:</strong>
+                            <br>"Governance isn't about avoiding risk or checking boxes. It's Governance-as-Enablement—a strategic function that unlocks speed, not a tax that slows it down."
+                            <br><br>New thinking on AI governance from @WriterAI 🔥
+                            <br><br>
+                            <strong>Quote Tweet 2:</strong>
+                            <br>"When an AI can independently execute a process, the focus must shift from what a model might say to what an agent will do."
+                            <br><br>This distinction changes everything about enterprise AI deployment.
+                            <br><br>
+                            <strong>Quote Tweet 3:</strong>
+                            <br>"Think of governance less like a brake pedal and more like the guardrails on a highway—it enables you to move fast, safely."
+                            <br><br>Exactly the reframe CMOs need. 💯
+                        </div>
+                        <div class="asset-meta">Shareable quotes for social proof and amplification</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Engagement Tweets</div>
+                        <div class="asset-title">3 Conversation Starters</div>
+                        <div class="asset-content">
+                            <strong>Engagement Tweet 1:</strong>
+                            <br>Your marketing AI can now:
+                            <br>• Execute multi-channel campaigns
+                            <br>• Manage budgets autonomously
+                            <br>• Make real-time optimization decisions
+                            <br><br>But can you explain what it did last Tuesday at 2pm?
+                            <br><br>If not, you have a governance gap.
+                            <br><br>
+                            <strong>Engagement Tweet 2:</strong>
+                            <br>Quick poll for CMOs:
+                            <br><br>What's your biggest concern about deploying autonomous AI agents in marketing?
+                            <br><br>A) Security risks
+                            <br>B) Lack of transparency
+                            <br>C) Proving ROI
+                            <br>D) Regulatory compliance
+                            <br><br>
+                            <strong>Engagement Tweet 3:</strong>
+                            <br>Hot take: The enterprises scaling AI successfully aren't the ones with the lightest governance.
+                            <br><br>They're the ones with governance that matches the technology.
+                            <br><br>Agree or disagree?
+                        </div>
+                        <div class="asset-meta">Designed to drive replies and community discussion</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Tab -->
+            <div id="email" class="tab-content">
+                <div class="channel-header">
+                    <h2>Email Assets</h2>
+                    <p>3 targeted email campaigns for different audience segments</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Nurture Email - Engaged Subscribers</div>
+                        <div class="asset-title">Convert Warm Audience (250 words)</div>
+                        <div class="asset-content">
+                            <strong>Subject Line Options:</strong>
+                            <br>1. Your AI governance framework just became obsolete
+                            <br>2. The Action Gap: Why traditional AI governance fails for autonomous agents
+                            <br>3. From brake pedal to highway guardrails: Rethinking AI governance
+                            <br><br>
+                            <strong>Preview Text:</strong>
+                            <br>Introducing the Agentic Compact—a new framework for governing AI that actually works
+                            <br><br>
+                            <strong>Email Body:</strong>
+                            <br><br>Hi [First Name],
+                            <br><br>
+                            Remember when AI governance was straightforward? You controlled inputs, moderated outputs, and ran quarterly audits. Those days are over.
+                            <br><br>
+                            Your AI workforce just graduated from answering questions to taking action. Marketing AI now executes campaigns, manages budgets, and makes real-time decisions across your entire stack. But traditional "responsible AI" frameworks weren't built to supervise autonomous agents—they were designed for a world where AI suggested and humans acted.
+                            <br><br>
+                            <strong>The result? A governance gap that's blocking AI adoption across enterprises.</strong>
+                            <br><br>
+                            We've spent the last year working with industry leaders to solve this problem. Today, we're releasing The Agentic AI Governance Playbook—your comprehensive framework for supervising autonomous systems safely and effectively.
+                            <br><br>
+                            Inside, you'll discover:
+                            <br>• Why traditional AI governance fails for agentic systems (and the 6 Articles that work)
+                            <br>• The Agentic Compact: A new operational contract for your digital workforce
+                            <br>• How to achieve Operational AI Trust across your enterprise
+                            <br>• Real-world implementation strategies from companies scaling AI successfully
+                            <br><br>
+                            Here's what makes this different: This isn't about adding more compliance overhead. It's Governance-as-Enablement—the strategic function that lets you move faster, not slower. Think highway guardrails, not speed bumps.
+                            <br><br>
+                            [Download the Playbook]
+                            <br><br>
+                            Leading enterprises are already using this framework to accelerate AI adoption while building the operational trust their teams need.
+                            <br><br>
+                            Best,
+                            <br>[Your Name]
+                            <br><br>
+                            P.S. The playbook includes a CIO's five-step implementation guide and industry case studies. Everything you need to go from pilot to production.
+                        </div>
+                        <div class="asset-meta">Includes: 3 subject lines, preview text, 2-3 key insights, social proof, CTA, P.S.</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Lead Nurture - Cold Prospects</div>
+                        <div class="asset-title">Warm Cold Database (180 words)</div>
+                        <div class="asset-content">
+                            <strong>Subject Line:</strong>
+                            <br>Is AI governance blocking your marketing innovation?
+                            <br><br>
+                            <strong>Preview Text:</strong>
+                            <br>Here's how to transform governance from bottleneck to strategic enabler
+                            <br><br>
+                            <strong>Email Body:</strong>
+                            <br><br>Hi [First Name],
+                            <br><br>
+                            Quick question: Is your AI governance framework enabling innovation or blocking it?
+                            <br><br>
+                            If you're stuck in the endless pilot phase—testing AI tools but never deploying at scale—governance might be the hidden bottleneck.
+                            <br><br>
+                            Here's why: Most governance frameworks were built for passive AI models that generated content for human review. But marketing AI is evolving. Today's systems execute campaigns, manage budgets, and orchestrate multi-channel workflows autonomously.
+                            <br><br>
+                            <strong>Your old governance playbook can't supervise this new workforce.</strong>
+                            <br><br>
+                            The good news? We've created a new framework specifically for autonomous AI systems. The Agentic AI Governance Playbook shows you how to:
+                            <br><br>
+                            • Supervise AI actions in real-time (not quarterly)
+                            <br>• Build operational trust across your organization
+                            <br>• Transform governance from a bottleneck into a strategic enabler
+                            <br>• Scale AI deployment while maintaining control
+                            <br><br>
+                            Over 100 enterprises are already using this approach to accelerate AI adoption.
+                            <br><br>
+                            [Explore the Playbook]
+                            <br><br>
+                            Worth a look?
+                            <br><br>
+                            [Your Name]
+                        </div>
+                        <div class="asset-meta">Softer CTA, pain point focused, educational approach</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Newsletter Snippet</div>
+                        <div class="asset-title">Newsletter Inclusion (95 words)</div>
+                        <div class="asset-content">
+                            <strong>The Agentic AI Governance Playbook: Your Framework for Supervising Autonomous Systems</strong>
+                            <br><br>
+                            Traditional AI governance can't keep up with autonomous agents that execute workflows, manage budgets, and make real-time decisions. The Agentic Compact provides 6 guiding principles for supervising your new digital workforce—transforming governance from bottleneck to strategic enabler. Includes implementation strategies, industry case studies, and a CIO's five-step playbook for enterprise-wide adoption. [Download the playbook]
+                        </div>
+                        <div class="asset-meta">Concise format for newsletter/digest inclusion</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Tab -->
+            <div id="sales" class="tab-content">
+                <div class="channel-header">
+                    <h2>Sales Enablement Tools</h2>
+                    <p>3 assets to accelerate deals and support discovery</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Sales One-Pager</div>
+                        <div class="asset-title">Complete Reference Guide (450 words)</div>
+                        <div class="asset-content">
+                            <strong>SALES TOOL: The Agentic AI Governance Playbook</strong>
+                            <br><br>
+                            <strong>What This Is:</strong>
+                            <br>A comprehensive enterprise framework for governing autonomous AI systems. This playbook addresses the governance gap created when AI evolves from passive assistant to active agent.
+                            <br><br>
+                            <strong>Problem/Objection It Addresses:</strong>
+                            <br>- "We're concerned about AI security and control"
+                            <br>- "How do we govern AI that takes autonomous actions?"
+                            <br>- "Our legal/compliance team is blocking AI deployment"
+                            <br>- "We need operational trust before scaling AI"
+                            <br><br>
+                            <strong>Key Talking Points:</strong>
+                            <br><br>
+                            <strong>1. The Action Gap Challenge</strong>
+                            <br>- Traditional governance frameworks were built for AI that suggests, not AI that acts
+                            <br>- When AI executes workflows autonomously, periodic audits and output reviews are insufficient
+                            <br>- This governance gap is blocking enterprise AI adoption at scale
+                            <br><br>
+                            <strong>2. The Agentic Compact Solution</strong>
+                            <br>- 6 guiding Articles specifically designed for autonomous systems
+                            <br>- Shifts focus from controlling outputs to supervising actions
+                            <br>- Provides real-time monitoring, full audit trails, and systemic containment
+                            <br>- Transforms governance from bottleneck to strategic enabler
+                            <br><br>
+                            <strong>3. Operational AI Trust</strong>
+                            <br>- Measurable confidence in the reliability of your digital workforce
+                            <br>- Enables business leaders to approve wider deployment
+                            <br>- Connects agent performance to tangible business value
+                            <br>- Built on transparency, containment, and continuous observability
+                            <br><br>
+                            <strong>4. Writer's Full-Stack Advantage</strong>
+                            <br>- Own the entire stack (Palmyra LLMs + Knowledge Graph)
+                            <br>- Secure, closed-loop system—data stays your data
+                            <br>- End-to-end auditability of every agentic task
+                            <br>- Enterprise trust and compliance by design
+                            <br><br>
+                            <strong>When to Send:</strong>
+                            <br>- Prospect mentions governance as a blocker to AI adoption
+                            <br>- During security/compliance discussions
+                            <br>- When competitive solutions lack transparency
+                            <br>- Technical validation stage with IT/Security stakeholders
+                            <br><br>
+                            <strong>What to Say:</strong>
+                            <br>"Many enterprises are stuck in pilot purgatory because their governance frameworks can't supervise autonomous AI. This playbook shows how leading companies are solving that problem. Would it be valuable for your team to see how others are building operational trust while accelerating deployment?"
+                            <br><br>
+                            <strong>What to Ask:</strong>
+                            <br>- "How is your team currently approaching governance for autonomous AI systems?"
+                            <br>- "What's blocking you from moving from pilot to production at scale?"
+                            <br>- "Who owns AI governance at your organization—is it a collaboration between legal, security, and business units?"
+                        </div>
+                        <div class="asset-meta">When to send, what to say, what to ask - complete sales guide</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Sales Outreach Template</div>
+                        <div class="asset-title">Prospecting Email (90 words)</div>
+                        <div class="asset-content">
+                            <strong>Subject Line:</strong>
+                            <br>Is AI governance blocking your deployment?
+                            <br><br>
+                            <strong>Email Body:</strong>
+                            <br><br>Hi [First Name],
+                            <br><br>
+                            I noticed [Company] has been exploring AI for [specific use case]. One pattern we see often: companies get stuck between pilot and production because their governance frameworks can't supervise autonomous AI.
+                            <br><br>
+                            Traditional "responsible AI" governance was built for models that suggest, not agents that act. When AI executes workflows autonomously, periodic audits and output reviews aren't enough.
+                            <br><br>
+                            We just released a playbook showing how leading enterprises are solving this—moving from governance-as-bottleneck to governance-as-enabler.
+                            <br><br>
+                            [Link to playbook]
+                            <br><br>
+                            Worth a quick look for your team?
+                            <br><br>
+                            [Your Name]
+                        </div>
+                        <div class="asset-meta">Personalized, problem-focused, value-first approach</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Discovery Call Talking Points</div>
+                        <div class="asset-title">4 Key Conversation Areas (200 words)</div>
+                        <div class="asset-content">
+                            <strong>DISCOVERY TALKING POINTS: AI Governance</strong>
+                            <br><br>
+                            <strong>1. Current State Assessment</strong>
+                            <br>- "How are you currently approaching AI governance? Is it centralized or distributed?"
+                            <br>- "What frameworks or standards are you following? (ISO, NIST, internal?)"
+                            <br>- "Where does governance live—Legal? IT? Business units?"
+                            <br><br>
+                            <strong>2. Pain Point Identification</strong>
+                            <br>- "What's preventing you from scaling AI beyond pilot projects?"
+                            <br>- "How long does it typically take to get AI projects approved for production?"
+                            <br>- "Are you seeing pushback from compliance, legal, or security teams?"
+                            <br><br>
+                            <strong>3. Agentic AI Readiness</strong>
+                            <br>- "Are you deploying AI that takes autonomous actions—executing workflows, making decisions, accessing systems?"
+                            <br>- "How do you currently monitor and audit AI actions in real-time?"
+                            <br>- "Can you explain what any given AI agent did at a specific point in time?"
+                            <br><br>
+                            <strong>4. Value Alignment</strong>
+                            <br>- "What would change for your business if you could deploy AI at scale with full operational trust?"
+                            <br>- "How are you measuring AI ROI—and can you connect agent actions to business outcomes?"
+                            <br>- "What would governance-as-enabler (vs. bottleneck) be worth to your organization?"
+                            <br><br>
+                            <strong>Transition to Writer Solution:</strong>
+                            <br>"Based on what you've shared, it sounds like [specific pain point]. Let me show you how our approach to governance is fundamentally different..."
+                        </div>
+                        <div class="asset-meta">Structured discovery framework for sales calls</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distribution Tab -->
+            <div id="distribution" class="tab-content">
+                <div class="channel-header">
+                    <h2>Distribution & Amplification</h2>
+                    <p>3 assets for extended reach through partners, employees, and paid channels</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Partner/Affiliate Email</div>
+                        <div class="asset-title">Affiliate Activation (200 words)</div>
+                        <div class="asset-content">
+                            <strong>Subject Line:</strong>
+                            <br>New resource: The Agentic AI Governance Playbook
+                            <br><br>
+                            <strong>Email Body:</strong>
+                            <br><br>Hi [Partner Name],
+                            <br><br>
+                            We just released a comprehensive resource that your customers will love—The Agentic AI Governance Playbook.
+                            <br><br>
+                            <strong>Why This Matters:</strong>
+                            <br>Enterprise AI adoption is stuck. Not because of technology limitations, but because traditional governance frameworks can't supervise autonomous AI systems. This playbook solves that problem.
+                            <br><br>
+                            <strong>What's Inside:</strong>
+                            <br>- The Agentic Compact: 6 Articles for governing autonomous systems
+                            <br>- Why traditional "responsible AI" fails for agentic systems
+                            <br>- How to achieve Operational AI Trust across the enterprise
+                            <br>- CIO's five-step implementation playbook
+                            <br>- Industry case studies and real-world strategies
+                            <br><br>
+                            <strong>For Your Audience:</strong>
+                            <br>This is perfect for enterprise customers struggling with:
+                            <br>- Moving from AI pilot to production at scale
+                            <br>- Getting buy-in from legal/compliance teams
+                            <br>- Building operational trust in autonomous systems
+                            <br>- Proving AI ROI and business value
+                            <br><br>
+                            <strong>How to Share:</strong>
+                            <br>Feel free to share directly with customers or feature in your newsletter/social channels. No gate required—it's freely available here: [link]
+                            <br><br>
+                            Let me know if you'd like any additional context or co-marketing opportunities.
+                            <br><br>
+                            [Your Name]
+                        </div>
+                        <div class="asset-meta">No-gate sharing instructions for partner networks</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Internal Employee Sharing</div>
+                        <div class="asset-title">Employee Advocacy Message (110 words)</div>
+                        <div class="asset-content">
+                            <strong>For Writer Employees to Share:</strong>
+                            <br><br>
+                            Excited to share something our team has been working on! 🎉
+                            <br><br>
+                            The Agentic AI Governance Playbook just launched—and it's already changing conversations with enterprises about AI deployment.
+                            <br><br>
+                            Here's the insight that sparked this: Traditional "responsible AI" governance was built for models that suggest, not agents that act. When AI crosses the Action Gap and starts executing workflows autonomously, everything about how you govern it must change.
+                            <br><br>
+                            The playbook introduces the Agentic Compact—6 principles for supervising autonomous AI systems. It's governance that enables speed instead of slowing it down.
+                            <br><br>
+                            Proud of the research and thought leadership our team put into this. If you're working on AI deployment at scale, definitely worth a read.
+                            <br><br>
+                            [Link to playbook]
+                            <br><br>
+                            #AgenticAI #AIGovernance #ProudToBeWriter
+                        </div>
+                        <div class="asset-meta">Ready-to-share LinkedIn post for employee advocacy</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Paid Promotion Copy</div>
+                        <div class="asset-title">LinkedIn Ad + Twitter Promoted Tweet</div>
+                        <div class="asset-content">
+                            <strong>LinkedIn Sponsored Content Ad</strong>
+                            <br><br>
+                            <strong>Headline:</strong>
+                            <br>Stop Letting Governance Block Your AI Deployment
+                            <br><br>
+                            <strong>Body:</strong>
+                            <br>Traditional AI governance frameworks can't supervise autonomous agents. The Agentic Compact provides 6 principles for governing AI that actually works—transforming oversight from bottleneck to strategic enabler. Download the free playbook.
+                            <br><br>
+                            <strong>CTA:</strong>
+                            <br>Get the Playbook
+                            <br><br>
+                            <hr style="margin: 24px 0; border: none; border-top: 1px solid #e0e0e0;">
+                            <br>
+                            <strong>Twitter Promoted Tweet</strong>
+                            <br><br>
+                            Your AI governance framework is obsolete. Autonomous agents need supervision of actions, not just outputs. Get the new playbook for governing agentic AI systems. [link] #AgenticAI #AIGovernance
+                        </div>
+                        <div class="asset-meta">Optimized ad copy for LinkedIn and Twitter paid campaigns</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Tab -->
+            <div id="seo" class="tab-content">
+                <div class="channel-header">
+                    <h2>SEO & Organic Discovery</h2>
+                    <p>3 assets for search optimization and organic reach</p>
+                </div>
+
+                <div class="assets-grid">
+                    <div class="asset-card">
+                        <div class="asset-type">Meta Description</div>
+                        <div class="asset-title">Search Engine Optimization (158 characters)</div>
+                        <div class="asset-content" style="font-size: 15px; background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 3px solid #A78BFA;">
+                            The Agentic AI Governance Playbook: Enterprise framework for supervising autonomous AI systems. Get the 6 principles of the Agentic Compact.
+                        </div>
+                        <div class="asset-meta">Optimized for search engines | 158 characters (within 160 limit)</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Social Share Copy</div>
+                        <div class="asset-title">Facebook/LinkedIn OG Tags (52 words)</div>
+                        <div class="asset-content">
+                            Traditional AI governance can't supervise autonomous agents. The Agentic AI Governance Playbook introduces a new framework—the Agentic Compact—for governing AI systems that execute workflows, make decisions, and take actions independently. Transform governance from bottleneck to strategic enabler. Free download: [link]
+                        </div>
+                        <div class="asset-meta">Open Graph optimized for social sharing previews</div>
+                    </div>
+
+                    <div class="asset-card">
+                        <div class="asset-type">Resources Page Snippet</div>
+                        <div class="asset-title">Website Placement (50 words)</div>
+                        <div class="asset-content">
+                            <strong>The Agentic AI Governance Playbook</strong>
+                            <br><br>
+                            Enterprise framework for supervising autonomous AI systems. Introduces the Agentic Compact—6 principles for governing agents that execute workflows and make real-time decisions. Includes CIO implementation guide, industry case studies, and strategies for achieving Operational AI Trust. [Download]
+                        </div>
+                        <div class="asset-meta">Concise format for resource pages and content hubs</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var tabContent = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+
+            // Remove active class from all buttons
+            var tabButtons = document.getElementsByClassName("tab-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            // Show current tab and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

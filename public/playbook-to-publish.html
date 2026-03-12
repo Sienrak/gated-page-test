@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Assets Dashboard</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 40px 20px; background-color: #f4f7f9; }
+    .dashboard-container { background-color: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; }
+    .header { padding: 25px 30px; background-color: #111827; color: #fff; }
+    .header h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.5px; }
+    .tab { overflow: hidden; background-color: #f9fafb; border-bottom: 1px solid #e5e7eb; display: flex; flex-wrap: wrap; }
+    .tab button { background-color: inherit; border: none; outline: none; cursor: pointer; padding: 16px 24px; transition: 0.2s; font-size: 15px; font-weight: 600; color: #6b7280; border-bottom: 3px solid transparent; }
+    .tab button:hover { background-color: #f3f4f6; color: #111827; }
+    .tab button.active { background-color: #fff; border-bottom: 3px solid #2563eb; color: #2563eb; }
+    .tabcontent { display: none; padding: 40px; animation: fadeEffect 0.4s; }
+    @keyframes fadeEffect { from {opacity: 0; transform: translateY(5px);} to {opacity: 1; transform: translateY(0);} }
+    h1, h2, h3 { color: #111827; margin-top: 0; }
+    h1 { font-size: 28px; border-bottom: 2px solid #f3f4f6; padding-bottom: 10px; margin-bottom: 20px; }
+    h2 { font-size: 22px; margin-top: 30px; }
+    h3 { font-size: 18px; margin-top: 25px; }
+    hr { border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0; }
+    strong { color: #111827; }
+    p { margin-bottom: 16px; }
+    ul { padding-left: 20px; margin-bottom: 20px; }
+    li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="header">
+        <h1>Marketing Assets Dashboard</h1>
+    </div>
+
+    <div class="tab">
+      <button class="tablinks active" onclick="openTab(event, 'Playbook')">Playbook Instructions</button>
+      <button class="tablinks" onclick="openTab(event, 'YouTube')">YouTube Script</button>
+      <button class="tablinks" onclick="openTab(event, 'LinkedIn')">LinkedIn Script</button>
+      <button class="tablinks" onclick="openTab(event, 'Blog')">Blog Post</button>
+      <button class="tablinks" onclick="openTab(event, 'Metadata')">Blog Metadata</button>
+    </div>
+
+    <div id="Playbook" class="tabcontent" style="display:block;">
+      <h1>Playbook instructions: Customer segmentation revenue maximizer</h1>
+<p><strong>Global formatting rules:</strong>
+1. <strong>Brand name:</strong> The company name "WRITER" must always be written in ALL-CAPS.
+2. <strong>Header formatting:</strong> All headers must use sentence case (First word capitalized, all words after lowercase, except for proper nouns and acronyms).</p>
+<h3>1. Customer segmentation analysis</h3>
+<ul>
+<li>Query <a href="SNOWFLAKE">w-connector</a> to extract customer data including lifetime value, credit score, customer segment, risk profile, and status</li>
+<li>Calculate average engagement scores per customer by joining with marketing response data from <a href="SNOWFLAKE">w-connector</a></li>
+<li>Segment customers into value tiers: High-Value (top 20%), Mid-Value (middle 30%), Low-Value (bottom 50%)</li>
+<li>Analyze distribution of customers across segments by region, acquisition channel, and risk profile</li>
+<li>Identify characteristics of top-performing customer segments (highest lifetime value + engagement)</li>
+</ul>
+<h3>2. Marketing performance by segment</h3>
+<ul>
+<li>Query <a href="SNOWFLAKE">w-connector</a> to analyze campaign performance for each customer segment</li>
+<li>Calculate response rates, conversion rates, and ROI by segment and channel</li>
+<li>Identify which marketing channels work best for each customer segment</li>
+<li>Find segments with high potential but low marketing engagement</li>
+<li>Calculate average conversion value per segment</li>
+</ul>
+<h3>3. Revenue opportunity gap analysis</h3>
+<ul>
+<li>Compare actual revenue performance vs. potential for each segment</li>
+<li>Identify high-value customers who are inactive or low-engagement (churn risk opportunities)</li>
+<li>Find mid-value customers with low risk scores who could be upsold to premium products</li>
+<li>Analyze segments with high engagement but low conversion (optimization opportunities)</li>
+<li>Calculate total addressable revenue opportunity by segment and strategy</li>
+</ul>
+<h3>4. Revenue maximization strategy</h3>
+<ul>
+<li>Prioritize segments by revenue opportunity size and ease of execution</li>
+<li>Develop specific targeting strategies for top 3 opportunity segments</li>
+<li>Recommend optimal marketing channels and campaign types per segment</li>
+<li>Create customer targeting criteria (credit score ranges, risk thresholds, engagement minimums)</li>
+<li>Estimate expected revenue lift and required marketing investment per strategy</li>
+</ul>
+<h3>5. Actionable campaign recommendations</h3>
+<ul>
+<li>Generate specific campaign ideas with target audience definitions</li>
+<li>Recommend budget allocation across segments and channels</li>
+<li>Identify quick wins (high-value inactive customers, high-engagement non-converters)</li>
+<li>Suggest A/B testing strategies to validate assumptions</li>
+<li>Provide timeline and success metrics for each recommended campaign</li>
+</ul>
+<h3>6. Data visualization creation</h3>
+<ul>
+<li>Create interactive dashboard showing customer segment distribution with pie charts and bar graphs</li>
+<li>Visualize lifetime value distribution across segments using box plots or histograms</li>
+<li>Generate heat map showing channel performance by customer segment</li>
+<li>Create waterfall chart illustrating revenue opportunity gaps by segment</li>
+<li>Build scatter plot showing relationship between engagement score and lifetime value by segment</li>
+<li>Visualize campaign ROI comparison across segments and channels using grouped bar charts</li>
+<li>Create funnel visualization showing conversion rates from contact to conversion by segment</li>
+</ul>
+<h3>Completion</h3>
+<ul>
+<li>Deliver comprehensive revenue maximization report with executive summary and detailed findings</li>
+<li>Include all SQL queries for easy implementation of targeting strategies</li>
+<li>Provide interactive HTML dashboard with all visualizations embedded for easy sharing and presentation</li>
+<li>Include data tables with segment definitions, opportunity sizing, and campaign recommendations</li>
+</ul>
+    </div>
+
+    <div id="YouTube" class="tabcontent">
+      <h1>YouTube script: Customer segmentation revenue maximizer playbook</h1>
+<p><strong>Target Length:</strong> 5-7 minutes
+<strong>Tone:</strong> Conversational, optimistic, authoritative, inclusive ("we", "our")</p>
+<hr />
+<p><strong>[0:00 - 0:45] Intro &amp; hook</strong></p>
+<p><strong>Visual:</strong> Presenter (Ben Popper) on screen, looking directly at the camera. Upbeat, engaging background music.</p>
+<p><strong>Ben:</strong> 
+If you're a marketer, you know the feeling. You've got mountains of customer data sitting in Snowflake, but turning that data into actual revenue? That's the hard part. You're trying to figure out who your best customers are, where they're coming from, and why some of them just aren't engaging with your campaigns. </p>
+<p>It's a classic problem: you have the data, but you don't have the time to manually segment it, analyze the gaps, and build targeted campaigns. It takes weeks of querying, analyzing, and building presentations. </p>
+<p>But what if you could automate that entire process? What if an AI agent could do the heavy lifting for you, turning raw data into a comprehensive revenue maximization strategy in minutes?</p>
+<p>I'm Ben Popper, Director of Content Marketing at WRITER, and today I'm going to show you a Playbook we built that does exactly that. It's called the Customer segmentation revenue maximizer, and it's going to change the way you look at your customer data. Stick around, and I'll show you how it works.</p>
+<hr />
+<p><strong>[0:45 - 1:30] The promise &amp; tease</strong></p>
+<p><strong>Visual:</strong> Screen recording of the WRITER Agent interface, showing the Playbook overview.</p>
+<p><strong>Ben:</strong>
+This Playbook isn't just about pulling data; it's about finding the hidden revenue opportunities in your customer base. It connects directly to Snowflake, extracts your customer data—lifetime value, credit scores, risk profiles—and segments them into high, mid, and low-value tiers. </p>
+<p>But it doesn't stop there. It analyzes your marketing performance across those segments, identifies where you're leaving money on the table, and builds a complete strategy to capture it. We're talking actionable campaign recommendations, budget allocations, and even an interactive dashboard to visualize it all. </p>
+<p>And the best part? You don't need to write a single line of SQL or spend hours in Excel. The agent handles it all. Let's dive in.</p>
+<hr />
+<p><strong>[1:30 - 3:30] The details: How it works</strong></p>
+<p><strong>Visual:</strong> Screen recording of the Playbook running, highlighting the different steps.</p>
+<p><strong>Ben:</strong>
+Here's how we set it up. Inside WRITER Agent, we have our Playbook instructions. </p>
+<p>First, the agent queries Snowflake to extract and segment the data. It looks at lifetime value and engagement scores to categorize customers. </p>
+<p>Next, it analyzes our marketing performance. It calculates response rates, conversion rates, and ROI by segment and channel. This tells us exactly what's working and what isn't.</p>
+<p>Then comes the magic: the revenue opportunity gap analysis. The agent compares actual revenue against potential revenue. It finds those high-value customers who have gone quiet—our churn risks—and identifies mid-value customers who are ripe for an upsell. It calculates the total addressable revenue opportunity for each segment.</p>
+<p>Based on that analysis, the agent develops a revenue maximization strategy. It prioritizes the top three opportunity segments and recommends specific targeting strategies, optimal channels, and even estimates the expected revenue lift.</p>
+<p>Finally, it generates actionable campaign recommendations. We get specific campaign ideas, budget allocations, and quick wins we can launch immediately. </p>
+<hr />
+<p><strong>[3:30 - 5:00] The payoff: The deliverables</strong></p>
+<p><strong>Visual:</strong> Show the final outputs: the comprehensive report, the SQL queries, and the interactive HTML dashboard.</p>
+<p><strong>Ben:</strong>
+So, what do we get at the end of this? </p>
+<p>First, we get a comprehensive revenue maximization report. It includes an executive summary and detailed findings that you can take straight to your leadership team. </p>
+<p>Second, it provides all the SQL queries used for the analysis. This means your data team can easily implement these targeting strategies in your own systems.</p>
+<p>And third, it generates an interactive HTML dashboard. This dashboard visualizes everything—customer segment distribution, lifetime value, channel performance heat maps, and a waterfall chart showing the revenue opportunity gaps. It's all right there, easy to share and present.</p>
+<p>This is the difference between drowning in data and actually using it to drive growth. We've taken a process that used to take weeks and turned it into a repeatable, automated workflow.</p>
+<hr />
+<p><strong>[5:00 - 6:00] Conclusion &amp; call to action</strong></p>
+<p><strong>Visual:</strong> Presenter back on screen.</p>
+<p><strong>Ben:</strong>
+When we use AI agents like this, we're not just saving time; we're unlocking revenue that was hiding in plain sight. We're letting the AI handle the tedious data analysis so we can focus on what we do best: crafting the creative campaigns that actually connect with our customers.</p>
+<p>If you want to stop wrestling with data and start maximizing your revenue, you need to try this Playbook. </p>
+<p>Check out the links in the description to learn more about WRITER Agent and how you can start building your own automated workflows today. And if you found this helpful, be sure to like and subscribe. We'll be back next week with another Playbook that will help you work smarter, not harder. Thanks for watching!</p>
+    </div>
+
+    <div id="LinkedIn" class="tabcontent">
+      <h1>LinkedIn video script: Customer segmentation revenue maximizer playbook</h1>
+<p><strong>Target Length:</strong> 2-3 minutes
+<strong>Tone:</strong> Punchy, professional, ROI-focused</p>
+<hr />
+<p><strong>[0:00 - 0:30] Hook &amp; problem</strong></p>
+<p><strong>Visual:</strong> Presenter (Ben Popper) on screen, energetic and direct.</p>
+<p><strong>Ben:</strong> 
+You've got mountains of customer data in Snowflake, but turning that data into actual revenue? That's the hard part. </p>
+<p>Manually segmenting customers, analyzing marketing gaps, and building targeted campaigns takes weeks. By the time you have the insights, the opportunity might already be gone.</p>
+<p>I'm Ben Popper, Director of Content Marketing at WRITER. Today, I'm going to show you how an AI agent can automate that entire process, turning raw data into a comprehensive revenue maximization strategy in minutes.</p>
+<hr />
+<p><strong>[0:30 - 1:30] The solution &amp; how it works</strong></p>
+<p><strong>Visual:</strong> Quick screen recording of the WRITER Agent interface and the Playbook running.</p>
+<p><strong>Ben:</strong>
+We built a Playbook called the Customer segmentation revenue maximizer. Here's how it works:</p>
+<p>It connects directly to Snowflake, extracts your customer data, and automatically segments them into high, mid, and low-value tiers based on lifetime value and engagement.</p>
+<p>But it doesn't stop at segmentation. The agent analyzes your marketing performance across those segments to find where you're leaving money on the table. It identifies high-value customers who are at risk of churning and mid-value customers ripe for an upsell.</p>
+<p>Then, it builds a complete strategy. It prioritizes the top opportunity segments, recommends specific targeting strategies, and even estimates the expected revenue lift.</p>
+<hr />
+<p><strong>[1:30 - 2:15] The payoff</strong></p>
+<p><strong>Visual:</strong> Show the final outputs: the report, SQL queries, and the interactive dashboard.</p>
+<p><strong>Ben:</strong>
+In minutes, you get a comprehensive revenue maximization report ready for leadership. </p>
+<p>You get the exact SQL queries your data team needs to implement the targeting.</p>
+<p>And you get an interactive HTML dashboard that visualizes everything—from customer distribution to channel performance heat maps and revenue opportunity gaps.</p>
+<hr />
+<p><strong>[2:15 - 2:30] Call to action</strong></p>
+<p><strong>Visual:</strong> Presenter back on screen.</p>
+<p><strong>Ben:</strong>
+Stop wrestling with data and start maximizing your revenue. Let the AI handle the analysis so you can focus on crafting campaigns that convert.</p>
+<p>Check out the link in the comments to learn more about WRITER Agent and try this Playbook for yourself.</p>
+    </div>
+
+    <div id="Blog" class="tabcontent">
+      <h1>Stop wrestling with Snowflake data: How to automate customer segmentation</h1>
+<p>Let's talk about something every marketer secretly hates: staring at mountains of customer data in Snowflake and having absolutely no idea how to turn it into actual revenue. </p>
+<p>You know the data is there. You know your best customers are hiding somewhere in those tables, along with the ones who are about to churn and the ones who are just waiting for the right upsell. But finding them? That's a different story.</p>
+<p>The old way: Weeks of manual querying, Excel gymnastics, and building endless slide decks just to figure out who your best customers actually are. By the time you finally have the insights, the opportunity has probably already passed you by. </p>
+<p>The new way: An AI agent that segments your audience, analyzes the gaps, and builds a complete revenue strategy in minutes. </p>
+<p>Here's the thing. We built a Playbook called the Customer segmentation revenue maximizer, and it basically does the heavy lifting for you. </p>
+<p>Behind the scenes, there's some clever AI orchestration happening—but you don't need to know the details to get results. The agent connects directly to Snowflake, pulls in your customer data (think lifetime value, credit scores, and risk profiles), and automatically segments them into high, mid, and low-value tiers. </p>
+<p>But it doesn't stop at basic segmentation. The playbook handles the complex stuff. It analyzes your marketing performance across those segments to find exactly where you're leaving money on the table. It identifies those high-value customers who have gone quiet and the mid-value customers who are ripe for an upsell. It even calculates the total addressable revenue opportunity for each segment.</p>
+<p>The kicker? You don't just get a spreadsheet at the end of this. </p>
+<p>The agent generates a comprehensive revenue maximization report that's ready for your leadership team. It provides the exact SQL queries your data team needs to implement the targeting strategies. And it builds an interactive HTML dashboard that visualizes everything—from customer distribution to channel performance heat maps and revenue opportunity gaps. </p>
+<p>What used to require a data analyst, a marketing strategist, and an entire afternoon now happens in the background while you're grabbing coffee. </p>
+<p>This is the difference between drowning in data and actually using it to drive growth. When you let AI handle the tedious data analysis, you get to focus on what you actually enjoy doing: crafting the creative campaigns that connect with your customers.</p>
+<p>Trust me, seeing this in action is way better than reading about it. Curious about how the agent actually pulls this off? The video breaks it down better than I can in 500 words. </p>
+<p>Watch the full demo of the Customer segmentation revenue maximizer playbook to see how you can stop wrestling with data and start maximizing your revenue.</p>
+    </div>
+
+    <div id="Metadata" class="tabcontent">
+      <h1>Blog metadata package: Stop wrestling with Snowflake data: How to automate customer segmentation</h1>
+<h2>SEO metadata</h2>
+<p><strong>Title:</strong> Automate customer segmentation in Snowflake with AI agents
+<strong>URL Slug:</strong> automate-snowflake-customer-segmentation
+<strong>Meta Description:</strong> Stop wrestling with Snowflake data. Learn how AI agents can automate customer segmentation, analyze gaps, and build revenue strategies in minutes.</p>
+<h2>Summarized by WRITER</h2>
+<ul>
+<li><strong>Automated segmentation:</strong> AI agents connect directly to Snowflake to automatically segment customers into high, mid, and low-value tiers based on lifetime value and engagement.</li>
+<li><strong>Revenue gap analysis:</strong> The playbook analyzes marketing performance across segments to identify churn risks and upsell opportunities, calculating the total addressable revenue.</li>
+<li><strong>Actionable strategies:</strong> Beyond just data, the agent generates a comprehensive report, SQL queries for implementation, and an interactive HTML dashboard to visualize the opportunity.</li>
+<li><strong>Focus on creativity:</strong> By automating tedious data analysis, marketing teams can shift their focus back to crafting creative campaigns that actually connect with customers.</li>
+</ul>
+<h2>Social media copy</h2>
+<h3>LinkedIn</h3>
+<p>Let's talk about something every marketer secretly hates: staring at mountains of customer data in Snowflake and having absolutely no idea how to turn it into actual revenue. </p>
+<p>You know your best customers are hiding somewhere in those tables, along with the ones who are about to churn and the ones who are just waiting for the right upsell. But finding them? That usually means weeks of manual querying, Excel gymnastics, and building endless slide decks.</p>
+<p>There's a better way. We built a Playbook called the Customer segmentation revenue maximizer that does the heavy lifting for you. </p>
+<p>It connects directly to Snowflake, pulls in your customer data, and automatically segments them. But it doesn't stop there. It analyzes your marketing performance to find exactly where you're leaving money on the table, and generates a comprehensive report, the exact SQL queries your data team needs, and an interactive HTML dashboard.</p>
+<p>What used to require a data analyst, a marketing strategist, and an entire afternoon now happens in the background while you're grabbing coffee. </p>
+<p>Check out the full video to see how you can stop wrestling with data and start maximizing your revenue. </p>
+<h1>AIAgents #MarketingAutomation #DataAnalytics #CustomerSegmentation #WRITER</h1>
+<h3>Twitter/X</h3>
+<p>Stop wrestling with Snowflake data. 📊 Our new AI agent playbook automates customer segmentation, analyzes revenue gaps, and builds a complete strategy in minutes. Watch the demo to see how it works: [INSERT LINK] #AIAgents #MarketingAutomation #DataAnalytics</p>
+<h2>Employee advocacy</h2>
+<h3>LinkedIn Post Beyond</h3>
+<p>We just published a new video showing how to solve one of the biggest headaches in marketing: turning Snowflake data into actual revenue. </p>
+<p>If you've ever spent weeks manually querying data and building slide decks just to figure out who your best customers are, you need to see this. Our new Customer segmentation revenue maximizer playbook uses AI agents to automate the entire process—from segmentation to gap analysis to generating the SQL queries your team needs. </p>
+<p>It's basically an AI assistant that handles the heavy lifting so you can focus on strategy. Check out the full demo here: [INSERT LINK]</p>
+<h3>Twitter Post Beyond</h3>
+<p>Tired of staring at mountains of Snowflake data? 😫 We built an AI agent that automates customer segmentation and builds a complete revenue strategy in minutes. Check out the demo: [INSERT LINK] #AIAgents #MarketingAutomation</p>
+<h2>Internal communications</h2>
+<h3>Slack message</h3>
+<p>🚀 New Playbook video alert! 🚀</p>
+<p>We just published a new video on the blog: "Stop wrestling with Snowflake data: How to automate customer segmentation." It showcases our new Customer segmentation revenue maximizer playbook, which uses AI agents to turn raw Snowflake data into actionable revenue strategies in minutes. </p>
+<p>This is a huge win for any marketing team drowning in data. Check it out and share it with your networks! ✨</p>
+<p>[INSERT LINK]</p>
+<h2>Related content</h2>
+<ol>
+<li>
+<p><strong>Agentic AI for marketing teams: Use cases from content generation to campaign orchestration</strong>
+   URL: https://writer.com/blog/agentic-ai-for-marketing-teams/
+   Relevance: This article provides a broader overview of how AI agents can be used across various marketing functions, complementing the specific segmentation use case.</p>
+</li>
+<li>
+<p><strong>How to build an AI-native marketing engine: The platform capabilities that make it possible</strong>
+   URL: https://writer.com/blog/how-to-build-an-ai-native-marketing-engine/
+   Relevance: This post discusses the foundational capabilities needed to support advanced AI workflows like the Snowflake segmentation playbook.</p>
+</li>
+<li>
+<p><strong>The five pillars of AI-native marketing: Why focusing on productivity alone isn’t enough</strong>
+   URL: https://writer.com/blog/five-pillars-of-ai-native-marketing/
+   Relevance: This piece emphasizes the strategic value of AI beyond just saving time, aligning perfectly with the playbook's focus on maximizing revenue.</p>
+</li>
+</ol>
+    </div>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+</html>

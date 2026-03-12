@@ -83,7 +83,7 @@ const Index = () => {
 
         <main className="flex-1 min-w-0 grid gap-10">
           {/* Playbook 1 — always visible, buttons unchanged */}
-        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/agentic_marketer_dashboard.html" previewUrl="/agentic_marketer_dashboard.html" />
+        <ContentSection {...playbooks[0]} sectionLabel="Playbook 1" showDemoButton viewOutputUrl="/content-playbook-1-stop-slop.html" previewUrl="/content-playbook-1-stop-slop.html" />
 
         {/* Playbook 2 — always visible, buttons trigger modal when locked */}
         <ContentSection
@@ -152,6 +152,34 @@ const Index = () => {
             <iframe
               src="https://ben10x.netlify.app/agentic_marketer_dashboard.html"
               title="Webinar to derivative content dashboard"
+              className="w-full h-[760px] border-0 block"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
+        <section id="dashboards-item-3" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
+            Playbook to Publish
+          </div>
+          <h3 className="m-0 text-[clamp(1.5rem,2.2vw,2rem)] font-semibold leading-tight text-[#3c2a46]">
+            Playbook to Publish dashboard
+          </h3>
+          <div className="mt-3 mb-4 text-sm text-foreground/70">
+            Click in the embed to interact, use fullscreen controls, or open in a new tab.
+          </div>
+          <a
+            href="/playbook-to-publish.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-4 rounded-full px-4 py-2 text-sm font-semibold no-underline bg-secondary text-secondary-foreground hover:-translate-y-0.5 transition-transform"
+          >
+            Open dashboard in new tab
+          </a>
+          <div className="rounded-xl overflow-hidden border border-white/20 bg-white/30">
+            <iframe
+              src="/playbook-to-publish.html"
+              title="Playbook to Publish dashboard"
               className="w-full h-[760px] border-0 block"
               allowFullScreen
             />
