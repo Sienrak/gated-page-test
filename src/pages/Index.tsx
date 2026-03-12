@@ -102,6 +102,15 @@ const Index = () => {
           viewOutputUrl="/enhanced_dashboard.html"
         />
 
+        <ContentSection
+          title="Automating Regulatory Compliance"
+          description={"Marketers workin in highly regulated industries can have a tough time moving quickly. This agent automates a check for FINRA compliance, then automatically annotates and updates copy so you can understand the suggestions and easily accept edits."}
+          videoUrl="https://www.youtube.com/embed/p25IYVoFBgI"
+          sectionLabel="Playbook 4"
+          previewUrl="/finra-document-compliance-dashboard.html"
+          viewOutputUrl="/finra-document-compliance-dashboard.html"
+        />
+
         <section id="dashboards-item-1" className="glass-section p-7">
           <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-muted-foreground">
             Competitor launch analysis

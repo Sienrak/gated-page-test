@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulatory Compliance Review Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 2rem 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background: white;
+            padding: 0 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .tab:hover {
+            background: #f8f9fa;
+            color: #667eea;
+        }
+        
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        .card h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+        
+        .card ul, .card ol {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 4px solid;
+        }
+        
+        .stat-card.critical { border-top-color: #e74c3c; }
+        .stat-card.partial { border-top-color: #f39c12; }
+        .stat-card.compliant { border-top-color: #27ae60; }
+        .stat-card.neutral { border-top-color: #667eea; }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card.critical .stat-number { color: #e74c3c; }
+        .stat-card.partial .stat-number { color: #f39c12; }
+        .stat-card.compliant .stat-number { color: #27ae60; }
+        .stat-card.neutral .stat-number { color: #667eea; }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .finding {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .finding.critical { border-left-color: #e74c3c; background: #fff5f5; }
+        .finding.partial { border-left-color: #f39c12; background: #fffbf0; }
+        .finding.compliant { border-left-color: #27ae60; background: #f0fff4; }
+        
+        .finding-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .finding-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 1rem;
+        }
+        
+        .finding-badge.critical { background: #e74c3c; color: white; }
+        .finding-badge.partial { background: #f39c12; color: white; }
+        .finding-badge.compliant { background: #27ae60; color: white; }
+        
+        .finding-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            flex: 1;
+        }
+        
+        .finding-rule {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .finding-content {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .finding-content strong {
+            color: #2c3e50;
+        }
+        
+        .document-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+        
+        .document-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .document-meta {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .document-text {
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlighted {
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .highlighted.critical {
+            background: #ffebee;
+            border-bottom: 2px solid #e74c3c;
+        }
+        
+        .highlighted.partial {
+            background: #fff8e1;
+            border-bottom: 2px solid #f39c12;
+        }
+        
+        .highlighted:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .annotation {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 350px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+        }
+        
+        .annotation.critical { border-color: #e74c3c; }
+        .annotation.partial { border-color: #f39c12; }
+        
+        .highlighted:hover .annotation {
+            display: block;
+        }
+        
+        .annotation-header {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .annotation-content {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .suggestion {
+            background: #e8f5e9;
+            border-left: 3px solid #27ae60;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .framework-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .framework-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .framework-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .framework-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .emoji {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Regulatory Compliance Review Dashboard</h1>
+        <p>SEC, FINRA & GIPS Marketing Material Analysis</p>
+    </div>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(0)">Executive Summary</div>
+        <div class="tab" onclick="switchTab(1)">Test Results</div>
+        <div class="tab" onclick="switchTab(2)">Annotated Document</div>
+    </div>
+    
+    <div class="content">
+        <!-- Tab 1: Executive Summary -->
+        <div class="tab-content active">
+            <div class="card">
+                <h2>Playbook Overview</h2>
+                <p>The <strong>Regulatory Compliance Review (SEC, FINRA, GIPS)</strong> playbook is an advanced AI-powered compliance workflow designed to analyze financial marketing documents against 565+ regulatory rules across 21 distinct regulatory frameworks. This comprehensive system evaluates marketing materials for investment products, ensuring adherence to SEC, FINRA, and investment company standards before distribution.</p>
+                
+                <h3>How It Works</h3>
+                <p>The playbook operates through a sophisticated seven-step process that combines intelligent rule selection with professional compliance expertise. First, it extracts and cleans text content from uploaded documents (PDF, DOCX, or PPTX), removing chart data and quantitative figures while preserving all written content. Next, it classifies the document type using a detailed classification guide that categorizes materials into 14 distinct types (A-N), from fund fact sheets to pitch decks and client communications.</p>
+                
+                <p>Based on this classification, the system intelligently selects applicable regulatory frameworks from its library of 21 frameworks. Rather than applying all rules universally, it uses document-specific trigger logic to evaluate only relevant regulations. Each framework contains an "Applicability" section that confirms document type, content triggers, and audience alignment before rule evaluation begins.</p>
+                
+                <p>The evaluation process applies professional judgment to score each triggered rule using a three-tier system: 🟢 Compliant (all requirements met), 🟡 Partially Compliant (most requirements met but minor issues exist), or 🔴 Non-Compliant (required elements missing or prohibited elements present). The system mandates citing specific rule numbers in every assessment, ensuring complete traceability and actionable recommendations.</p>
+                
+                <h3>Unique Capabilities</h3>
+                <p>What sets this playbook apart is its non-invasive analysis approach and dual-output system. For DOCX files, it not only generates a comprehensive compliance report but also creates an annotated version of the original document with comments and tracked changes. Using a custom Word document editor utility, it adds compliance comments to violation locations and suggests specific corrections with tracked changes, all while preserving original formatting. This provides compliance teams with both strategic oversight and tactical remediation guidance in a single workflow, dramatically reducing review time while maintaining regulatory rigor.</p>
+            </div>
+        </div>
+        
+        <!-- Tab 2: Test Results -->
+        <div class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card critical">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Critical Violations</div>
+                </div>
+                <div class="stat-card partial">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Partial Issues</div>
+                </div>
+                <div class="stat-card compliant">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Compliant Items</div>
+                </div>
+                <div class="stat-card neutral">
+                    <div class="stat-number">31%</div>
+                    <div class="stat-label">Compliance Rate</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Test Document Overview</h2>
+                <p><strong>Document:</strong> First Trust Private Real Estate Income Fund - Marketing Fact Sheet</p>
+                <p><strong>Classification:</strong> A1 - Fund Fact Sheet / Tear Sheet</p>
+                <p><strong>Target Audience:</strong> Retail and Institutional Investors</p>
+                <p><strong>Applicable Frameworks:</strong> 7 of 21 total frameworks</p>
+                <p><strong>Overall Status:</strong> <span style="color: #e74c3c; font-weight: bold;">NON-COMPLIANT</span> ⚠️</p>
+            </div>
+            
+            <div class="card">
+                <h2>Critical Violations (🔴 Red)</h2>
+                <p style="margin-bottom: 1.5rem;"><em>Critical violations represent material breaches that must be fixed before distribution. These issues create significant legal and compliance risk.</em></p>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Misleading "Yield" Terminology with Options</span>
+                        <span class="finding-rule">MKT.1</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Document states "boost the yield beyond standard real estate distributions" when describing option premium income.<br><br>
+                        <strong>Why Critical:</strong> Options premium must be described as "premium income" or "income from option writing," not "yield," which implies continuity and predictability not present in option strategies. This misleads investors about the nature and reliability of income.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Prospectus Offer Omission</span>
+                        <span class="finding-rule">MKT.3</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Document contains substantive product information, performance data, and investment features without including a prospectus offer statement.<br><br>
+                        <strong>Why Critical:</strong> Prospectus offers may only be omitted when material mentions only the product name. This document contains extensive promotional content, making a prospectus offer mandatory under securities law.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Non-Standardized Performance Presentation</span>
+                        <span class="finding-rule">MKT.7, SEC_482.3</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Shows "Last Quarter Total Return: +2.1%" without standardized 1-, 5-, 10-year returns, NAV and Market Price returns, inception date, expense ratios, or proper disclaimers.<br><br>
+                        <strong>Why Critical:</strong> SEC rules require standardized performance presentations to enable fair comparison. Cherry-picking favorable time periods without context misleads investors about true performance.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Incomplete Morningstar Rating Disclosure</span>
+                        <span class="finding-rule">MKT.11, FINRA_2212.3</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Shows "⭐⭐⭐⭐⭐" rating without time period, category name, number of funds in category, ranking criteria, or source attribution.<br><br>
+                        <strong>Why Critical:</strong> Performance rankings require complete contextual information. Without category details and methodology, the rating is meaningless and potentially misleading to investors.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">False "Safe Haven" and Risk-Free Claims</span>
+                        <span class="finding-rule">MKT.13, FINRA_2210.16, SEC_10B5.2</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Document claims "Safe Haven for your 401(k)" and states the fund is "not subject to market crashes."<br><br>
+                        <strong>Why Critical:</strong> These are promissory, exaggerated statements that violate anti-fraud provisions. No investment is immune to market risk. Claims of safety or certainty are categorically prohibited as they create unrealistic investor expectations.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Unbalanced Risk/Benefit Presentation</span>
+                        <span class="finding-rule">MKT.13, FINRA_2210.18</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Material emphasizes benefits and income potential while minimizing risks. Section 5 disclaimer is insufficient to balance promotional content.<br><br>
+                        <strong>Why Critical:</strong> Regulations require fair and balanced presentation. Over-emphasizing benefits without proportionate risk disclosure creates misleading overall impression that violates fair dealing standards.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Missing 30-Day SEC Yield</span>
+                        <span class="finding-rule">MKT.4</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Shows "Current Distribution Rate: 7.5%" and "Projected 2026 Yield: 8.2%" without required 30-day SEC yield.<br><br>
+                        <strong>Why Critical:</strong> The 30-day SEC yield is the standardized, mandated metric for yield presentations. Using alternative yield measures without the SEC yield prevents proper comparison and misleads investors.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Prohibited Performance Prediction</span>
+                        <span class="finding-rule">FINRA_2210.19</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> "Projected 2026 Yield: 8.2%" is an explicit performance prediction.<br><br>
+                        <strong>Why Critical:</strong> FINRA categorically prohibits performance predictions as they suggest certainty about future results. Even with disclaimers, forward-looking yield projections are not permitted.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Prohibited Competitor Comparison</span>
+                        <span class="finding-rule">MKT.27</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Section 4 compares fund directly to "Competitor X Private Fund" showing fees, yield, and ratings.<br><br>
+                        <strong>Why Critical:</strong> Product-to-product comparisons are prohibited even if technically allowed by FINRA. Only index/benchmark comparisons are permitted. Direct competitor comparisons inevitably favor the advertiser and mislead investors.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Unauthorized Pareto Reference</span>
+                        <span class="finding-rule">MKT.35</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> References "First Trust's proprietary Pareto-driven selection process" without explicit approval.<br><br>
+                        <strong>Why Critical:</strong> Pareto content distribution requires explicit approval. Incorporating Pareto methodology or content without authorization violates internal compliance protocols.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Misleading Property Image</span>
+                        <span class="finding-rule">FINRA_2210.16, SEC_10B5.2</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Shows property image with note "owned by the Fund's sub-advisor, though not yet acquired by this specific Fund."<br><br>
+                        <strong>Why Critical:</strong> Displaying property not actually owned by the fund is materially misleading. The fine-print notation doesn't cure the deception. Images must accurately represent actual fund holdings.
+                    </div>
+                </div>
+                
+                <div class="finding critical">
+                    <div class="finding-header">
+                        <span class="finding-badge critical">Critical</span>
+                        <span class="finding-title">Material Omissions - Risk Disclosure</span>
+                        <span class="finding-rule">SEC_10B5.3</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Violation:</strong> Missing critical disclosures about illiquidity risks, redemption restrictions, valuation methodology for "stable NAV," fee structures, and options strategy risks.<br><br>
+                        <strong>Why Critical:</strong> Material omissions render statements misleading even if technically true. Private real estate funds have significant illiquidity and valuation challenges that must be prominently disclosed.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Partial Compliance Issues (🟡 Yellow)</h2>
+                <p style="margin-bottom: 1.5rem;"><em>Partial compliance issues indicate areas where most requirements are met but minor problems exist. These should be addressed to achieve full compliance.</em></p>
+                
+                <div class="finding partial">
+                    <div class="finding-header">
+                        <span class="finding-badge partial">Partial</span>
+                        <span class="finding-title">Undefined Investment Terms</span>
+                        <span class="finding-rule">MKT.14</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Issue:</strong> Retail-facing content uses undefined terms: "NAV," "Pareto-driven selection process," "Direct participation programs," "off-market gems."<br><br>
+                        <strong>Why Partial:</strong> While the document targets retail investors appropriately, it fails to define complex investment terminology. The use of colloquial expressions like "gems" is unprofessional. Adding definitions would achieve full compliance.
+                    </div>
+                </div>
+                
+                <div class="finding partial">
+                    <div class="finding-header">
+                        <span class="finding-badge partial">Partial</span>
+                        <span class="finding-title">Unsourced Economist Quote</span>
+                        <span class="finding-rule">MKT.38</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Issue:</strong> References "Brian Wesbury's team" and "V-shaped recovery" prediction without proper source citation.<br><br>
+                        <strong>Why Partial:</strong> The reference itself is permissible since Wesbury is First Trust's chief economist, but it lacks proper sourcing from published First Trust communications. Adding a citation would resolve the issue.
+                    </div>
+                </div>
+                
+                <div class="finding partial">
+                    <div class="finding-header">
+                        <span class="finding-badge partial">Partial</span>
+                        <span class="finding-title">Principal Approval Pending</span>
+                        <span class="finding-rule">FINRA_2210.2</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Issue:</strong> Document marked as "(Draft)" without visible principal approval signature or date.<br><br>
+                        <strong>Why Partial:</strong> The draft status suggests approval may be in progress. However, retail communications require registered principal approval before use. The approval process appears incomplete rather than absent.
+                    </div>
+                </div>
+                
+                <div class="finding partial">
+                    <div class="finding-header">
+                        <span class="finding-badge partial">Partial</span>
+                        <span class="finding-title">Options Risk Disclosure Incomplete</span>
+                        <span class="finding-rule">FINRA_2360</span>
+                    </div>
+                    <div class="finding-content">
+                        <strong>Issue:</strong> Mentions covered call strategy but lacks required options risk disclosures and Options Disclosure Document (ODD) reference.<br><br>
+                        <strong>Why Partial:</strong> The strategy description is accurate and the covered call approach is legitimate. However, any options communication requires specific risk disclosures and ODD offer. Adding these elements would achieve compliance.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Compliant Areas (🟢 Green)</h2>
+                <p style="margin-bottom: 1.5rem;"><em>These areas meet all regulatory requirements and demonstrate proper compliance practices.</em></p>
+                
+                <div class="finding compliant">
+                    <div class="finding-header">
+                        <span class="finding-badge compliant">Compliant</span>
+                        <span class="finding-title">Communication Type Classification</span>
+                        <span class="finding-rule">FINRA_2210.1</span>
+                    </div>
+                    <div class="finding-content">
+                        Document properly identifies dual audience (retail and institutional), enabling appropriate regulatory treatment.
+                    </div>
+                </div>
+                
+                <div class="finding compliant">
+                    <div class="finding-header">
+                        <span class="finding-badge compliant">Compliant</span>
+                        <span class="finding-title">Member Name Disclosure</span>
+                        <span class="finding-rule">FINRA_2210.21</span>
+                    </div>
+                    <div class="finding-content">
+                        First Trust is properly identified as the member firm throughout the document.
+                    </div>
+                </div>
+                
+                <div class="finding compliant">
+                    <div class="finding-header">
+                        <span class="finding-badge compliant">Compliant</span>
+                        <span class="finding-title">Standard Disclosure Presence</span>
+                        <span class="finding-rule">Various</span>
+                    </div>
+                    <div class="finding-content">
+                        Section 5 includes appropriate standard disclosures about past performance, risks, and the importance of reading the prospectus. While these disclosures should be more prominent and comprehensive, their presence demonstrates awareness of disclosure requirements.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Framework Coverage Summary</h2>
+                <table class="framework-table">
+                    <thead>
+                        <tr>
+                            <th>Framework</th>
+                            <th><span class="emoji">🟢</span> Compliant</th>
+                            <th><span class="emoji">🟡</span> Partial</th>
+                            <th><span class="emoji">🔴</span> Critical</th>
+                            <th>Not Triggered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Marketing General (MKT)</strong></td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>7</td>
+                            <td>26</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FINRA 2210</strong></td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>7</td>
+                            <td>26</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SEC 10b-5</strong></td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SEC 482/156</strong></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FINRA 2360</strong></td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FINRA 2212</strong></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr style="background: #f8f9fa; font-weight: bold;">
+                            <td><strong>TOTAL</strong></td>
+                            <td><strong>14 (31%)</strong></td>
+                            <td><strong>4 (9%)</strong></td>
+                            <td><strong>21 (47%)</strong></td>
+                            <td><strong>67</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Tab 3: Annotated Document -->
+        <div class="tab-content">
+            <div class="document-section">
+                <div class="document-title">Marketing Fact Sheet <span style="color: #999;">(Draft)</span></div>
+                <div class="document-meta">
+                    <strong>Product:</strong> First Trust Private Real Estate Income Fund (the "Fund")<br>
+                    <strong>Date:</strong> January 2026<br>
+                    <strong>Audience:</strong> For Retail and Institutional Use
+                </div>
+                
+                <div class="document-text">
+                    <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Section 1: Investment Strategy</h3>
+                    <p>The Fund seeks to provide investors with high monthly income and capital preservation by investing in a diversified portfolio of high-quality, private commercial real estate. Unlike traditional REITs, our Fund offers a <span class="highlighted critical">stable $10.00 NAV<span class="annotation critical"><div class="annotation-header">🔴 MKT.13, FINRA_2210.16, SEC_10B5.2</div><div class="annotation-content"><strong>Violation:</strong> Promissory statement about NAV stability. No fund can guarantee a stable NAV.<div class="suggestion">Suggested fix: Remove "stable" or add "The Fund seeks to maintain" with appropriate risk disclosure.</div></div></span></span> and avoids the volatility of the public markets. We leverage <span class="highlighted critical">First Trust's proprietary Pareto-driven selection process<span class="annotation critical"><div class="annotation-header">🔴 MKT.35</div><div class="annotation-content"><strong>Violation:</strong> Unauthorized Pareto reference without explicit approval.<div class="suggestion">Suggested fix: Remove Pareto reference or obtain explicit approval from compliance.</div></div></span></span> to identify "off-market" gems.</p>
+                </div>
+                
+                <div class="document-text">
+                    <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Section 2: Performance & Yield</h3>
+                    <p><span class="highlighted critical">Since inception, the Fund has outperformed the S&P 500 Real Estate Index consistently<span class="annotation critical"><div class="annotation-header">🔴 FINRA_2210.16</div><div class="annotation-content"><strong>Violation:</strong> Exaggerated performance claim without standardized presentation or proper context.<div class="suggestion">Suggested fix: Provide standardized performance table with all time periods and proper benchmarking.</div></div></span></span>.</p>
+                    
+                    <p><span class="highlighted critical">Current Distribution Rate: 7.5% (Annualized)<span class="annotation critical"><div class="annotation-header">🔴 MKT.4</div><div class="annotation-content"><strong>Violation:</strong> Shows distribution rate without required 30-day SEC yield.<div class="suggestion">Suggested fix: Include 30-day SEC yield and standardized yield methodology disclosure.</div></div></span></span></p>
+                    
+                    <p><span class="highlighted critical">Projected 2026 Yield: 8.2%<span class="annotation critical"><div class="annotation-header">🔴 FINRA_2210.19</div><div class="annotation-content"><strong>Violation:</strong> Explicit performance prediction prohibited by FINRA.<div class="suggestion">Suggested fix: Remove projection entirely. Projections are categorically prohibited.</div></div></span></span></p>
+                    
+                    <p><span class="highlighted critical">Last Quarter Total Return: +2.1% (Gross of fees)<span class="annotation critical"><div class="annotation-header">🔴 MKT.7, SEC_482.3</div><div class="annotation-content"><strong>Violation:</strong> Cherry-picked performance period without standardized presentation.<div class="suggestion">Suggested fix: Create complete standardized performance table with 1-, 5-, 10-year returns, inception date, expense ratios, and proper disclaimers.</div></div></span></span></p>
+                    
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">[IMAGE INSERT: Luxury apartment complex in Miami, FL]</p>
+                    <p><span class="highlighted critical">Note: This is an actual property owned by the Fund's sub-advisor, though not yet acquired by this specific Fund<span class="annotation critical"><div class="annotation-header">🔴 FINRA_2210.16, SEC_10B5.2</div><div class="annotation-content"><strong>Violation:</strong> Misleading image presentation - showing property not owned by the fund.<div class="suggestion">Suggested fix: Only show properties actually owned by the fund, or remove image entirely.</div></div></span></span>.</p>
+                </div>
+                
+                <div class="document-text">
+                    <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Section 3: Why Invest Now?</h3>
+                    <p><strong>1. <span class="highlighted critical">High Yield with Options<span class="annotation critical"><div class="annotation-header">🔴 MKT.1</div><div class="annotation-content"><strong>Violation:</strong> Uses "yield" terminology to describe option premium income.<div class="suggestion">Suggested fix: Change to "Enhanced Income from Options" and replace "boost the yield" with "generate additional premium income."</div></div></span></span>:</strong> We utilize a "covered call" overlay on our liquid REIT sleeve to <span class="highlighted critical">boost the yield<span class="annotation critical"><div class="annotation-header">🔴 MKT.1</div><div class="annotation-content"><strong>Violation:</strong> Options income must be called "premium income" not "yield."<div class="suggestion">Suggested fix: "generate additional premium income" or "enhance income."</div></div></span></span> beyond standard real estate distributions.</p>
+                    
+                    <p><strong>2. Expert Management:</strong> Managed by <span class="highlighted partial">Brian Wesbury's team<span class="annotation partial"><div class="annotation-header">🟡 MKT.38</div><div class="annotation-content"><strong>Partial Issue:</strong> Reference lacks proper source citation.<div class="suggestion">Suggested fix: Add citation to published First Trust communication where this prediction appears.</div></div></span></span>, ensuring the portfolio is positioned for the "V-shaped recovery" Wesbury has predicted in his recent economic notes.</p>
+                    
+                    <p><strong>3. <span class="highlighted critical">Low Risk<span class="annotation critical"><div class="annotation-header">🔴 MKT.13, FINRA_2210.18</div><div class="annotation-content"><strong>Violation:</strong> Unsubstantiated risk characterization.<div class="suggestion">Suggested fix: Remove "Low Risk" or substantiate with objective metrics and balanced risk disclosure.</div></div></span></span>:</strong> Because these are unlisted assets, the Fund is <span class="highlighted critical">not subject to market crashes<span class="annotation critical"><div class="annotation-header">🔴 MKT.13, FINRA_2210.16, SEC_10B5.2</div><div class="annotation-content"><strong>Violation:</strong> False statement - private real estate is still subject to market risk.<div class="suggestion">Suggested fix: "less subject to daily market volatility" with disclosure about illiquidity and valuation risks.</div></div></span></span>. It is a "<span class="highlighted critical">Safe Haven<span class="annotation critical"><div class="annotation-header">🔴 MKT.13, FINRA_2210.16, SEC_10B5.2</div><div class="annotation-content"><strong>Violation:</strong> Promissory, exaggerated claim. No investment is a "safe haven."<div class="suggestion">Suggested fix: Remove "Safe Haven" language entirely. Describe actual characteristics without promissory implications.</div></div></span></span>" for your 401(k) or ERISA accounts.</p>
+                </div>
+                
+                <div class="document-text">
+                    <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Section 4: Comparative Analytics</h3>
+                    <div style="background: #ffebee; border: 2px solid #e74c3c; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p style="color: #e74c3c; font-weight: bold; margin-bottom: 0.5rem;">🔴 MKT.27 - PROHIBITED CONTENT</p>
+                        <p style="margin: 0;"><strong>Violation:</strong> This section contains a direct product-to-product comparison with "Competitor X Private Fund" showing fees, yield, and Morningstar ratings.</p>
+                        <div class="suggestion" style="background: #fff; border-left-color: #e74c3c;">
+                            <strong>Required Action:</strong> Remove entire competitor comparison table. Replace with benchmark index comparison only.
+                        </div>
+                    </div>
+                    
+                    <p><span class="highlighted critical">Morningstar Rating: ⭐⭐⭐⭐⭐<span class="annotation critical"><div class="annotation-header">🔴 MKT.11, FINRA_2212.3</div><div class="annotation-content"><strong>Violation:</strong> Rating shown without category, date, number of funds, or methodology.<div class="suggestion">Suggested fix: "Morningstar Rating™: ⭐⭐⭐⭐⭐ (5 stars) for the [Category Name] category as of [Date]. Based on risk-adjusted returns among [X] funds in category."</div></div></span></span> (vs Competitor X: ⭐⭐)</p>
+                </div>
+                
+                <div class="document-text">
+                    <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Section 5: Standard Disclosures</h3>
+                    <p>This material is for informational purposes only. Past performance is no guarantee of future results. Investment in the Fund involves significant risks, including the loss of principal. <span class="highlighted critical">Please read the prospectus carefully before investing.<span class="annotation critical"><div class="annotation-header">🔴 MKT.3</div><div class="annotation-content"><strong>Violation:</strong> Prospectus reference is insufficient. Need full prospectus offer statement.<div class="suggestion">Suggested fix: "Please consider the investment objectives, risks, charges and expenses carefully before investing. The prospectus, which contains this and other information about the investment company, can be obtained from [source]. Read the prospectus carefully before investing."</div></div></span></span></p>
+                    
+                    <div style="background: #fff8e1; border-left: 3px solid #f39c12; padding: 1rem; margin-top: 1rem; border-radius: 4px;">
+                        <p style="color: #f39c12; font-weight: bold; margin-bottom: 0.5rem;">🟡 SEC_10B5.3 - MATERIAL OMISSIONS</p>
+                        <p style="margin: 0;"><strong>Missing Critical Disclosures:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Illiquidity risks in private real estate</li>
+                            <li>Redemption restrictions and timelines</li>
+                            <li>Valuation methodology for "stable NAV"</li>
+                            <li>Complete fee structure beyond annual fee</li>
+                            <li>Options strategy risks and ODD offer</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: #e74c3c; color: white; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; text-align: center;">
+                    <h3 style="color: white; margin-bottom: 0.5rem;">⚠️ COMPLIANCE STATUS: NON-COMPLIANT</h3>
+                    <p style="margin: 0;"><strong>DO NOT DISTRIBUTE</strong> in current form. Substantial revision required addressing all Critical Priority items before any use.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    contents[i].classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                    contents[i].classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
