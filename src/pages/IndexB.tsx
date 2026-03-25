@@ -50,9 +50,10 @@ const navChapters = [
   { label: "Playbooks by Function", id: "by-function" },
   { label: "Content", id: "content-section" },
   { label: "Field", id: "field-section" },
+  { label: "SEO to GEO", id: "seo-geo-section" },
 ];
 
-const pinkNavIds = new Set(["content-section", "field-section"]);
+const pinkNavIds = new Set(["content-section", "field-section", "seo-geo-section"]);
 
 const functionTabs = ["Content", "Product Marketing", "Communications", "Demand Gen", "Social"];
 
@@ -347,6 +348,20 @@ const IndexB = () => {
                 </div>
               </div>
             }
+          />
+        </section>
+
+        <section id="seo-geo-section" className="glass-section p-7">
+          <div className="mb-3 text-sm font-semibold tracking-[0.08em] uppercase text-pink-500">
+            SEO to GEO
+          </div>
+          <ContentSection
+            title="FAQ schema generator"
+            description={"This agent analyses your web pages and suggest the best way to turn your existing content into FAQ content, also improving the JSON schema, so that your page will rank better with AI chatbots."}
+            videoUrl="https://www.youtube.com/embed/lHmybZeQUPw"
+            sectionLabel="Playbook 1"
+            previewUrl="/hirstute-website.html"
+            viewOutputUrl="/hirstute-website.html"
           />
         </section>
 
