@@ -2,96 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap');
+/* Community Compute — editorial dark theme
+   Display: Fraunces (high-contrast serif) · Body: Inter
+   Fonts are loaded via <link> in index.html. */
 
 @layer base {
   :root {
-    --tan-1: 14 100% 92%;
-    --tan-2: 340 62% 91%;
-    --tan-3: 2 74% 92%;
-    --pink-1: 308 72% 79%;
-    --pink-2: 303 64% 82%;
-    --pink-3: 305 69% 81%;
-    --lav-1: 271 96% 91%;
-    --lav-2: 290 69% 88%;
-    --lav-3: 296 63% 90%;
+    /* Raw Community Compute palette */
+    --cc-ink: 160 22% 5%;          /* page background */
+    --cc-ink-2: 158 20% 7%;        /* alternating band */
+    --cc-surface: 158 16% 9%;      /* cards / panels */
+    --cc-surface-2: 156 14% 12%;   /* lifted panels */
+    --cc-line: 150 12% 20%;        /* hairline borders */
+    --cc-text: 45 30% 92%;         /* ivory */
+    --cc-muted: 150 8% 64%;        /* secondary text */
+    --cc-faint: 150 8% 46%;        /* tertiary / captions */
+    --cc-accent: 152 46% 60%;      /* luminous sage */
+    --cc-accent-deep: 154 40% 38%;
+    --cc-gold: 40 44% 68%;         /* warm signal */
 
-    --background: 300 30% 92%;
-    --foreground: 0 0% 9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-
-    --primary: 308 72% 79%;
-    --primary-foreground: 280 30% 10%;
-
-    --secondary: 280 20% 12%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 280 12% 29%;
-
-    --accent: 271 96% 91%;
-    --accent-foreground: 280 30% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 340 30% 85%;
-    --input: 340 30% 85%;
-    --ring: 308 72% 79%;
-
-    --radius: 1.5rem;
-
-    --shadow-panel: 0 28px 70px rgba(30, 16, 42, 0.16);
-    --gradient-primary: linear-gradient(135deg, hsl(var(--pink-2)), hsl(var(--lav-1)));
-    --gradient-bg: 
-      radial-gradient(680px 380px at 10% 5%, hsl(var(--tan-1)), transparent 60%),
-      radial-gradient(720px 420px at 80% 10%, hsl(var(--pink-1)), transparent 60%),
-      radial-gradient(640px 420px at 65% 90%, hsl(var(--lav-2)), transparent 60%),
-      linear-gradient(135deg, hsl(var(--tan-1)), hsl(var(--tan-2)) 40%, hsl(var(--lav-1)) 100%);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 280 30% 6%;
-    --foreground: 210 40% 98%;
-    --card: 280 30% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 280 30% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 308 72% 79%;
-    --primary-foreground: 280 30% 10%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 271 96% 91%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* shadcn tokens mapped onto the dark theme */
+    --background: var(--cc-ink);
+    --foreground: var(--cc-text);
+    --card: var(--cc-surface);
+    --card-foreground: var(--cc-text);
+    --popover: var(--cc-surface);
+    --popover-foreground: var(--cc-text);
+    --primary: var(--cc-accent);
+    --primary-foreground: 160 40% 6%;
+    --secondary: var(--cc-surface-2);
+    --secondary-foreground: var(--cc-text);
+    --muted: var(--cc-surface-2);
+    --muted-foreground: var(--cc-muted);
+    --accent: var(--cc-surface-2);
+    --accent-foreground: var(--cc-text);
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--cc-line);
+    --input: var(--cc-line);
+    --ring: var(--cc-accent);
+    --radius: 0.75rem;
   }
 }
 
@@ -100,60 +50,100 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground font-body;
-    background: var(--gradient-bg);
+    @apply bg-background text-foreground font-body antialiased;
+    background:
+      radial-gradient(1100px 620px at 82% -8%, hsl(154 40% 12% / 0.55), transparent 60%),
+      radial-gradient(900px 600px at 0% 8%, hsl(150 30% 10% / 0.45), transparent 55%),
+      hsl(var(--cc-ink));
     min-height: 100vh;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection {
+    background: hsl(var(--cc-accent) / 0.28);
+    color: hsl(var(--cc-text));
   }
 }
 
 @layer components {
-  .glass-panel {
-    @apply rounded-[var(--radius)] border border-white/60;
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-panel);
+  .cc-container {
+    @apply mx-auto w-full max-w-[1140px] px-6 sm:px-8;
   }
 
-  .glass-section {
-    @apply rounded-[var(--radius)] border border-white/70;
-    background: rgba(255, 255, 255, 0.86);
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow-panel);
+  .cc-eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[hsl(var(--cc-accent))];
   }
 
-  .dark-panel {
-    @apply rounded-[18px] text-white relative overflow-hidden;
-    background: hsl(var(--secondary));
+  /* Diamond motif carried from the deck */
+  .cc-diamond {
+    @apply inline-block align-middle;
+    width: 7px;
+    height: 7px;
+    transform: rotate(45deg);
+    background: hsl(var(--cc-accent));
   }
 
-  .gradient-blob-pink {
-    @apply absolute pointer-events-none;
-    background: radial-gradient(circle, hsl(var(--pink-2)), transparent 70%);
-    filter: blur(8px);
-    opacity: 0.8;
+  .cc-display {
+    @apply font-display font-normal leading-[1.04] tracking-[-0.015em];
   }
 
-  .gradient-blob-lav {
-    @apply absolute pointer-events-none;
-    background: radial-gradient(circle, hsl(var(--lav-1)), transparent 70%);
+  .cc-hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--cc-line)), transparent);
   }
 
-  .copy-box {
-    @apply rounded-2xl text-muted-foreground text-[15px] border;
-    padding: 18px;
-    background: linear-gradient(150deg, hsl(var(--tan-1)), hsl(var(--tan-2)));
-    border-color: rgba(230, 200, 204, 0.8);
+  .cc-panel {
+    @apply rounded-xl border;
+    background: linear-gradient(180deg, hsl(var(--cc-surface)) 0%, hsl(var(--cc-ink-2)) 100%);
+    border-color: hsl(var(--cc-line) / 0.9);
   }
 
-  .media-frame {
-    @apply rounded-2xl overflow-hidden border min-h-[220px];
-    border-color: rgba(230, 200, 204, 0.8);
-    background: #fff7fb;
+  .cc-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[14px] font-medium transition-all duration-200 cursor-pointer no-underline;
   }
 
-  .gif-frame {
-    @apply rounded-2xl overflow-hidden relative min-h-[220px];
-    aspect-ratio: 1 / 1;
+  .cc-btn-primary {
+    @apply cc-btn text-[hsl(var(--primary-foreground))];
+    background: hsl(var(--cc-accent));
+  }
+  .cc-btn-primary:hover {
+    background: hsl(152 52% 66%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px hsl(var(--cc-accent) / 0.22);
+  }
+
+  .cc-btn-ghost {
+    @apply cc-btn border text-[hsl(var(--cc-text))];
+    border-color: hsl(var(--cc-line));
+    background: hsl(var(--cc-surface) / 0.5);
+  }
+  .cc-btn-ghost:hover {
+    border-color: hsl(var(--cc-accent) / 0.7);
+    transform: translateY(-1px);
+  }
+
+  /* scroll reveal */
+  .cc-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .cc-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cc-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html { scroll-behavior: auto; }
   }
 }

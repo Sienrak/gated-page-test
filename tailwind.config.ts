@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Instrument Serif"', 'serif'],
-        body: ['"Manrope"', 'sans-serif'],
+        display: ['"Fraunces"', 'Georgia', 'serif'],
+        body: ['"Inter"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

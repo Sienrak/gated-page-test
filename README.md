@@ -1,75 +1,57 @@
-# Ben Popper's Personal Landing Page Project
+# Community Compute
 
-This is a personal project by **Ben Popper**, a **Content Marketing Director**, building a vibe-coded landing page.
+A private, password-gated marketing site for **Community Compute** —
+community-first renewable development for the AI era.
 
-## Project info
+Built with Vite + React + TypeScript + Tailwind. The landing page presents the
+narrative thesis (the opportunity, the two-problems-solve-each-other thesis, the
+model, why now, proof, sequencing, and team) with an option to download the
+white paper and an option to get in touch.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Local development
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+bun install       # or: npm install
+bun run dev       # start the dev server
+bun run build     # production build → dist/
 ```
 
-**Edit a file directly in GitHub**
+## Privacy / password gate
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The whole site sits behind a lightweight client-side passphrase gate
+(`src/components/PasswordGate.tsx`).
 
-**Use GitHub Codespaces**
+- **Default passphrase:** `communitycompute` (case-insensitive).
+- Only the SHA-256 **hash** of the passphrase ships in the bundle — the
+  plaintext is never included.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+> ⚠️ This is a "please don't wander in / don't index this" barrier suitable for a
+> pre-launch investor page, **not** server-side security. A determined visitor
+> with dev tools could bypass a purely client-side gate, and any file in
+> `public/` (including the white paper PDF) is served directly and is not gated.
+> If you need real access control, put the site behind hosting-level auth
+> (e.g. Netlify/Cloudflare password protection or Basic Auth).
 
-## What technologies are used for this project?
+**To change the passphrase**, compute a new hash and paste it into
+`PASSWORD_HASH` in `src/components/PasswordGate.tsx`:
 
-This project is built with:
+```sh
+node -e "console.log(require('crypto').createHash('sha256').update('yourpassphrase').digest('hex'))"
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+(Use the lowercased passphrase — the gate lowercases input before hashing.)
 
-## How can I deploy this project?
+## White paper & contact
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+- **White paper:** `public/community-compute-white-paper.pdf`. Replace this file
+  to update the download; the filename/link is defined by `WHITEPAPER_URL` in
+  `src/pages/CommunityCompute.tsx`.
+- **Contact email:** set by `CONTACT_EMAIL` at the top of
+  `src/pages/CommunityCompute.tsx` (currently a `mailto:` link). Swap in a
+  company address when one is available.
 
-## Can I connect a custom domain to my Lovable project?
+## Editing content
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+All copy and section structure live in `src/pages/CommunityCompute.tsx`. The
+design system (colors, typography, helper classes) is in `src/index.css` and
+`tailwind.config.ts`.
